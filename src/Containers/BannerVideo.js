@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CardProduct = (props) => {
+const BannerVideo = (props) => {
     // let {grid, image, title, bodytext} = props;
     let {videoUrl} = props;
 
@@ -11,5 +11,5 @@ const CardProduct = (props) => {
     )
 }
 
-export default CardProduct
+export default BannerVideo
 
