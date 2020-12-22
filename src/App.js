@@ -1,12 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-
-//container
-import BannerVideo from "./Container/BannerVideo.js"
+import Form from './Components/Form'
 
 function App() {
   return (
-    <BannerVideo videoUrl="indomie_default.mp4"></BannerVideo>
+    <Form></Form>
   );
 }
 
