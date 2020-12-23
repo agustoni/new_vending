@@ -76,6 +76,7 @@ export class Numpad extends Component {
 
     render() {
         let getBtn = this.createBtn()
+        
         return (
             <div className="container">
                 <div className="row">

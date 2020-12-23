@@ -1,0 +1,27 @@
+.selected-spice{
+	background: #e94a4a;
+}
+.selected-qty{
+    background: #11c9e7!important;
+}
+.selected-qty > .txt{
+    color: #fff !important
+}
+.bar-wrapper {
+    height: 90px;
+	float: left;
+    padding: 7px 25px;
+    width: 300px;
+    border: 2px solid #dbadad;
+    position: relative;
+    border-radius: 25px;
+}
+.spicelevel {
+    height: 90%;
+    width: 18%;
+    float: left;
+    margin: 2px;
+    border: 1px solid #e9b4b4;
+    border-radius: 7px;
+    cursor: pointer;
+}
