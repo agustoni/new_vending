@@ -24,7 +24,7 @@ export class SectionTopping extends Component {
         let selection = document.getElementsByClassName("qty")
 // console.log("Qty "+qty)
         for(var i=0;i<selection.length;i++){
-            console.log(qty+" <===> "+i)
+            // console.log(qty+" <===> "+i)
             if(i+1 === qty){
                 selection[i].classList.add("selected-qty")
             }else{

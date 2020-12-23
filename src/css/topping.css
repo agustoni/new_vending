@@ -1,5 +1,5 @@
 .selected-spice{
-	background: #e94a4a;
+	background: #ff0000;
 }
 .selected-qty{
     background: #11c9e7!important;
@@ -9,19 +9,17 @@
 }
 .bar-wrapper {
     height: 90px;
-	float: left;
-    padding: 7px 25px;
+    float: left;
+    padding: 7px 0px 7px 7px;
     width: 300px;
-    border: 2px solid #dbadad;
+    border: 5px solid #fbff00;
     position: relative;
-    border-radius: 25px;
 }
 .spicelevel {
     height: 90%;
     width: 18%;
     float: left;
     margin: 2px;
-    border: 1px solid #e9b4b4;
-    border-radius: 7px;
+    border: 5px solid #ff0000;
     cursor: pointer;
 }

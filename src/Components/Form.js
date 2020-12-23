@@ -5,19 +5,20 @@ import Step2 from './Step2'
 import Step3 from './Step3'
 import BannerVideo from '../Containers/BannerVideo'
 import SectionTopping from '../Containers/SectionTopping'
+import Numpad from '../Containers/Numpad'
 import { Container } from "reactstrap";
 
 export class Form extends Component {
-    render() {
+        render() {
         return (
             <Container fluid={true} className="p-0">
-                <SectionTopping/>
-                {/* <BannerVideo videoUrl="indomie_default.mp4"></BannerVideo>
+                {/* <SectionTopping/> */}
+                <BannerVideo videoUrl="indomie_default.mp4"></BannerVideo>
                 <StepWizard>
                     <Step1 />
                     <Step2 />
                     <Step3 />
-                </StepWizard> */}
+                </StepWizard>
             </Container>
         )
     }

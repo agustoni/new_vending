@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Row, Col, Card} from "reactstrap";
 import ListProduct from "../Containers/ListProduct";
 import ListProductItem from "../Containers/ListProductItem"
+import Numpad from '../Containers/Numpad'
 
 export class Step1 extends Component {
 
@@ -11,6 +12,7 @@ export class Step1 extends Component {
         this.state = {
             dummyProduct : [],
             dummyProductItems : [],
+            number : ''
         }
     }
 
@@ -148,6 +150,30 @@ export class Step1 extends Component {
 
         this.setState({
             dummyProductItems : data
+        })
+    }
+
+    //NUMPAD
+    clickHandlerNumpad = (num)=>{
+        let inputVal = this.state.number
+
+        if(num === "delete"){
+            if(inputVal !== ""){
+                inputVal = inputVal.slice(0, -1)
+            }
+            
+        }else if(num === "ok"){
+            if(inputVal !== ""){
+                //jika oke
+                console.log("oke")
+            }
+        }else{
+            inputVal += num
+        }
+
+        this.setState({
+            ...this.state,
+            number : inputVal
         })
     }
 
