@@ -5,12 +5,12 @@ import {
 } from 'reactstrap';
 
 const CardProduct = (props) => {
-    let {grid, image, title, bodytext} = props;
+    let {grid, image, title, bodytext, backgroundColor} = props;
     return (
         <div className={grid}>
-            <Button className="p-0 border-0 rounded-pill">
-                <Card body inverse style={{ backgroundColor: '#333', borderColor: '#333' }} className="rounded-pill">
-                    <CardImg className="rounded-pill" top width="100%" src={`${process.env.PUBLIC_URL}/images/product/${image}`}  alt="Card image cap" />
+            <Button className="p-0 border-0">
+                <Card body inverse style={{ backgroundColor: backgroundColor, borderColor: backgroundColor }}>
+                    <CardImg top width="100%" src={`${process.env.PUBLIC_URL}/images/product/${image}`}  alt="Card image cap" />
                     <CardTitle tag="h5">{title}</CardTitle>
                     <CardText>{bodytext}</CardText>
                 </Card>
