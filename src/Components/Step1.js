@@ -31,14 +31,24 @@ export class Step1 extends Component {
                     name: 'Indomie Soto',
                     image: 'logo-indomie-soto.png',
                     bodyText: 'Indomie soto dengan berbagai macam varian rasa',
-                    color: '#10ff00'
+                    color: '#10ff00',
+                    textColor: '#000000'
                 },
                 {
                     id: 2,
                     name: 'Mie Sedap Goreng',
                     image: 'logo-mie-sedap-goreng.png',
                     bodyText: 'Indomie soto dengan berbagai macam varian rasa',
-                    color: '#ffffff'
+                    color: '#ffffff',
+                    textColor: '#000000'
+                },
+                {
+                    id: 3,
+                    name: 'Ovo',
+                    image: 'logo-ovo.png',
+                    bodyText: 'Saldo Ovo',
+                    color: '#4c3494',
+                    textColor: '#ffffff'
                 }
             ]
         })
@@ -58,7 +68,8 @@ export class Step1 extends Component {
                     color: '#10ff00',
                     title: 'Indomie Soto XXX',
                     bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 },
                 {
                     id: 2,
@@ -67,7 +78,8 @@ export class Step1 extends Component {
                     color: '#10ff00',
                     title: 'Indomie Soto XXX',
                     bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 },
                 {
                     id: 3,
@@ -76,7 +88,8 @@ export class Step1 extends Component {
                     color: '#10ff00',
                     title: 'Indomie Soto XXX',
                     bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 },
                 {
                     id: 4,
@@ -85,7 +98,8 @@ export class Step1 extends Component {
                     color: '#10ff00',
                     title: 'Indomie Soto XXX',
                     bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 },
                 {
                     id: 5,
@@ -94,7 +108,8 @@ export class Step1 extends Component {
                     color: '#10ff00',
                     title: 'Indomie Soto XXX',
                     bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 }
             ]
         }else if (idProduct === 2){
@@ -106,7 +121,8 @@ export class Step1 extends Component {
                     color: '#ffffff',
                     title: 'Mie Sedap Goreng XXX',
                     bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 },
                 {
                     id: 1,
@@ -115,7 +131,8 @@ export class Step1 extends Component {
                     color: '#ffffff',
                     title: 'Mie Sedap Goreng XXX',
                     bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 },
                 {
                     id: 3,
@@ -124,7 +141,8 @@ export class Step1 extends Component {
                     color: '#ffffff',
                     title: 'Mie Sedap Goreng XXX',
                     bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 },
                 {
                     id: 4,
@@ -133,7 +151,8 @@ export class Step1 extends Component {
                     color: '#ffffff',
                     title: 'Mie Sedap Goreng XXX',
                     bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
                 },
                 {
                     id: 5,
@@ -142,7 +161,91 @@ export class Step1 extends Component {
                     color: '#ffffff',
                     title: 'Mie Sedap Goreng XXX',
                     bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-                    price: ''
+                    price: '',
+                    textColor: '#000000'
+                },
+            ]
+        }else if (idProduct === 3){
+            data = [
+                {
+                    id: 1,
+                    idProduct: 3,
+                    image: 'logo-ovo.png',
+                    color: '#4c3494',
+                    title: 'Saldo Ovo 10000',
+                    bodyText: '',
+                    price: '12000',
+                    textColor: '#ffffff'
+                },
+                {
+                    id: 2,
+                    idProduct: 3,
+                    image: 'logo-ovo.png',
+                    color: '#4c3494',
+                    title: 'Saldo Ovo 10000',
+                    bodyText: '',
+                    price: '12000',
+                    textColor: '#ffffff'
+                },
+                {
+                    id: 3,
+                    idProduct: 3,
+                    image: 'logo-ovo.png',
+                    color: '#4c3494',
+                    title: 'Saldo Ovo 10000',
+                    bodyText: '',
+                    price: '12000',
+                    textColor: '#ffffff'
+                },
+                {
+                    id: 4,
+                    idProduct: 3,
+                    image: 'logo-ovo.png',
+                    color: '#4c3494',
+                    title: 'Saldo Ovo 10000',
+                    bodyText: '',
+                    price: '12000',
+                    textColor: '#ffffff'
+                },
+                {
+                    id: 5,
+                    idProduct: 3,
+                    image: 'logo-ovo.png',
+                    color: '#4c3494',
+                    title: 'Saldo Ovo 10000',
+                    bodyText: '',
+                    price: '12000',
+                    textColor: '#ffffff'
+                },
+                {
+                    id: 6,
+                    idProduct: 3,
+                    image: 'logo-ovo.png',
+                    color: '#4c3494',
+                    title: 'Saldo Ovo 10000',
+                    bodyText: '',
+                    price: '12000',
+                    textColor: '#ffffff'
+                },
+                {
+                    id: 7,
+                    idProduct: 3,
+                    image: 'logo-ovo.png',
+                    color: '#4c3494',
+                    title: 'Saldo Ovo 10000',
+                    bodyText: '',
+                    price: '12000',
+                    textColor: '#ffffff'
+                },
+                {
+                    id: 8,
+                    idProduct: 3,
+                    image: 'logo-ovo.png',
+                    color: '#4c3494',
+                    title: 'Saldo Ovo 10000',
+                    bodyText: '',
+                    price: '12000',
+                    textColor: '#ffffff'
                 },
             ]
         }
@@ -180,12 +283,12 @@ export class Step1 extends Component {
     render() {
         const listDataProduct = this.state.dummyProduct.map((v, key) => 
                                 <Row className="m-2" key={key}>
-                                    <ListProduct click={()=>this.getDataProductItem(v.id)} image={v.image} backgroundColor={v.color} title={v.name} bodytext={v.bodyText}></ListProduct>
+                                    <ListProduct click={()=>this.getDataProductItem(v.id)} image={v.image} backgroundColor={v.color} title={v.name} bodytext={v.bodyText} textColor={v.textColor}></ListProduct>
                                 </Row>
                     )
         
         let listDataProductItems = this.state.dummyProductItems.map((v, key) => 
-            <ListProductItem key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.bodyText} backgroundColor={v.color}></ListProductItem>
+            <ListProductItem key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.bodyText} backgroundColor={v.color} textColor={v.textColor}></ListProductItem>
         )
         return (
             <div>
