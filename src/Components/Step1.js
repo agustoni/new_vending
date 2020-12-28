@@ -1,10 +1,12 @@
-import React, { Component } from 'react'
-import { Row, Col, Card} from "reactstrap";
+import React, {Component} from 'react'
+import {Row, Col} from "reactstrap";
 import ListProduct from "../Containers/ListProduct";
 import ListProductItem from "../Containers/ListProductItem"
 import Numpad from '../Containers/Numpad'
 import SectionTopping from '../Containers/SectionTopping'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faAngleDoubleLeft} from '@fortawesome/free-solid-svg-icons'
 import './../css/style.css'
 
 export class Step1 extends Component {
@@ -283,17 +285,25 @@ export class Step1 extends Component {
         })
     }
 
-    showTopping = (action) =>{
-        var target = document.getElementById('hidden_content');
-        // console.log(target.offsetWidth)
+    clickHandlerStep3 = (action, el=null) =>{
+        var target = document.getElementById('menuStep3')
+
         if(action === "open"){
-            target.style.padding = "5px 15px"
             target.style.width = "98%";
             target.style.border = "3px solid";
+
         }else{
-            target.style.padding = "0px"
             target.style.width = "0px";
             target.style.border = "0px";
+        }
+
+        var menuStep3 = document.getElementsByClassName("menuStep3")
+        for(var i=0;i<menuStep3.length;i++){
+            if(el === menuStep3[i].id){
+                document.getElementById(menuStep3[i].id).style.display = "block"
+            }else{
+                document.getElementById(menuStep3[i].id).style.display = "none"
+            }
         }
     }
 
@@ -307,26 +317,38 @@ export class Step1 extends Component {
         let listDataProductItems = this.state.dummyProductItems.map((v, key) => 
             <ListProductItem key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.bodyText} backgroundColor={v.color} textColor={v.textColor}></ListProductItem>
         )
+
         return (
             <div>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0">
                         <div className="m-2 row" style={{backgroundColor:"#fff"}}>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.showTopping("open")}>open</button>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.showTopping("close")}>close</button>
+                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerStep3("open", "menuStep3Indomie")}>indomie</button>
+                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerStep3("open", "menuStep3Ppob")}>ppob</button>
+                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerStep3("close")}>close</button>
                         </div>
-                        <div id="hidden_content" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid"}}>
-                            <SectionTopping/>
+                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid", height:"75%"}}>
+                            <div style={{width:"87%", float:"left", padding:"0px 15px"}}>
+                                <SectionTopping/>
+                                <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
+                            </div>
+                            <div id="closeStep3" style={{width:"13%", float:"left", height:"100%", borderLeft: "3px solid", position:"relative"}}
+                            onClick={()=>this.clickHandlerStep3('close')}>
+                            <FontAwesomeIcon 
+                                icon={faAngleDoubleLeft} 
+                                size="3x" 
+                                style={{color: "rgb(255 255 255)", cursor: "pointer", position: "absolute", left: "10px", top: "45%"}} />
+                            </div>
                         </div>
-                        { listDataProduct }
+                        {listDataProduct}
                     </Col>
                     <Col md="6" lg="6" className="p-0">
                         <Row className="mx-auto row">
-                        { listDataProductItems }
+                        {listDataProductItems}
                         </Row>
                     </Col>
                 </Row>
-                <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
+                
                 <h2>Step {this.props.currentStep}</h2>
                 <p>Total Steps: {this.props.totalSteps}</p>
                 <p>Is Active: {this.props.isActive}</p>

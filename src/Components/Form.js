@@ -12,7 +12,6 @@ export class Form extends Component {
         render() {
         return (
             <Container fluid={true} className="p-0">
-                {/* <SectionTopping/> */}
                 <BannerVideo videoUrl="indomie_default.mp4"></BannerVideo>
                 <StepWizard>
                     <Step1 />

@@ -4,7 +4,7 @@
     margin: 0 2px 5px 2px;
 }
 
-#hidden_content{
+#menuStep3{
     height: 100%;
     width: 0;
     position: absolute;
@@ -14,4 +14,7 @@
     background-color: #111;
     overflow-x: hidden;
     transition: 0.5s;
+}
+#closeStep3:active{
+    background-color:#00573f
 }

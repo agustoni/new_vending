@@ -9,10 +9,10 @@ const Numpad = (props) => {
     let getBtn = createBtn(props)
 
     return (
-        <div className="container">
+        <div className="container menuStep3" id="menuStep3Ppob" style={{display: "none"}}>
             <div className="row">
-                <div className="col-md-4 col-md-offset-4">
-                    <div className="row1">
+                <div className="col-md-11" style={{marginLeft:"auto", marginRight:"auto"}}>
+                    <div className="row1" style={{width:"397px"}}>
                         <div className="col-md-12">
                             <input type="text" name="name" id="telNumber" className="form-control tel" value={numberValue} readOnly/>
                             <div className="num-pad">
@@ -62,64 +62,5 @@ const createBtn = (x)=>{
 
     return btnEl
 }
-
-
-// export class Numpad extends Component {
-//     createBtn = ()=>{
-//         let btnEl = btnChar.map((num, key)  => {
-//             if(num === "delete"){
-//                 return (
-//                     <div className="span4" key={key}>
-//                         <div className="num  d-flex justify-content-center align-items-center" onClick={()=>this.props.click(num)}>
-//                             <FontAwesomeIcon icon={faBackspace} size="3x" />
-//                         </div>
-//                     </div>
-//                 )
-//             }else if(num === "ok"){
-//                 return (
-//                     <div className="span4" key={key}>
-//                         <div className="num  d-flex justify-content-center align-items-center" onClick={()=>this.props.click(num)}>
-//                             <FontAwesomeIcon icon={faCheck} size="3x" />
-//                         </div>
-//                     </div>
-//                 )
-//             }else{
-//                 return (
-//                     <div className="span4" key={key}>
-//                         <div className="num d-flex justify-content-center align-items-center" onClick={()=>this.props.click(num)}>
-//                             <div className="txt btn-number">
-//                                 {num}
-//                             </div>
-//                         </div>
-//                     </div>   
-//                 )
-//             }
-//         })
-
-//         return btnEl
-//     }
-
-//     render() {
-//         let getBtn = this.createBtn()
-        
-//         return (
-//             <div className="container">
-//                 <div className="row">
-//                     <div className="col-md-4 col-md-offset-4 phone">
-//                         <div className="row1">
-//                             <div className="col-md-12">
-//                                 <input type="text" name="name" id="telNumber" className="form-control tel" value={this.props.numberValue} readOnly/>
-//                                 <div className="num-pad">
-//                                 {getBtn}
-//                                 </div>
-//                                 <div className="clearfix"></div>
-//                             </div>
-//                         </div>
-//                     </div>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
 
 export default Numpad
