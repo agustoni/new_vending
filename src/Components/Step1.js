@@ -18,6 +18,7 @@ export class Step1 extends Component {
         this.state = {
             product : [],
             productItems : [],
+            dataOrder: {},
             number : ''
         }
     }
@@ -311,6 +312,7 @@ export class Step1 extends Component {
         })
     }
 
+    // ================== buat testing slide step 3 ================== 
     clickHandlerStep3 = (action, el=null) =>{
         var target = document.getElementById('menuStep3')
 
@@ -333,6 +335,30 @@ export class Step1 extends Component {
         }
     }
 
+    clickHandlerProduct = (action, id, idCategory, sellingPrice)=>{
+        var target = document.getElementById('menuStep3')
+        // console.log("click")
+        // console.log(action+" === "+id+" === "+idCategory+" === "+sellingPrice)
+
+        if(action === "open"){
+            target.style.width = "98%";
+            target.style.border = "3px solid";
+
+        }else{
+            target.style.width = "0px";
+            target.style.border = "0px";
+        }
+
+        var menuStep3 = document.getElementsByClassName("menuStep3")
+        for(var i=0;i<menuStep3.length;i++){
+            if("menuStep3_"+idCategory === menuStep3[i].id){
+                document.getElementById(menuStep3[i].id).style.display = "block"
+            }else{
+                document.getElementById(menuStep3[i].id).style.display = "none"
+            }
+        }
+    }
+
     render() {
         const listDataProduct = this.state.product.map((v, key) => 
                                 <Row className="m-2" key={key}>
@@ -341,13 +367,9 @@ export class Step1 extends Component {
                     )
         
         let listDataProductItems = this.state.productItems.map((v, key) => 
-            <ListProductItem key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id}></ListProductItem>
+            <ListProductItem click={(action, id, idCategory, sellingPrice)=>this.clickHandlerProduct("open", id, idCategory, sellingPrice)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id}></ListProductItem>
         )
-<<<<<<< HEAD
 
-=======
-        console.log(this.state)
->>>>>>> e777cadce871f06498364e047c4f05c347551fcf
         return (
             <div>
                 <Row className="m-auto">
@@ -357,7 +379,7 @@ export class Step1 extends Component {
                             <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerStep3("open", "menuStep3Ppob")}>ppob</button>
                             <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerStep3("close")}>close</button>
                         </div>
-                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid", height:"75%"}}>
+                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid", height:"800pxz"}}>
                             <div style={{width:"87%", float:"left", padding:"0px 15px"}}>
                                 <SectionTopping/>
                                 <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
@@ -378,11 +400,7 @@ export class Step1 extends Component {
                         </Row>
                     </Col>
                 </Row>
-<<<<<<< HEAD
-                
-=======
-                {/* <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
->>>>>>> e777cadce871f06498364e047c4f05c347551fcf
+
                 <h2>Step {this.props.currentStep}</h2>
                 <p>Total Steps: {this.props.totalSteps}</p>
                 <p>Is Active: {this.props.isActive}</p>

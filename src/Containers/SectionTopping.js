@@ -22,7 +22,7 @@ for(var i=1;i<=5;i++){
 
 const SectionTopping = (props) => {
     return(
-        <div id="menuStep3Indomie" className="menuStep3" style={{width:"446px", display:"none"}}>
+        <div id="menuStep3_2" className="menuStep3" style={{width:"446px", display:"none"}}>
             <Row>
                 <div className="col-md-12" id="section-spice">
                     <h3><b>Level Pedas</b></h3>
