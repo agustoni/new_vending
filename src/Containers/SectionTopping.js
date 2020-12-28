@@ -5,7 +5,6 @@ import './../css/style.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
 
-import Numpad from './Numpad'
 export class SectionTopping extends Component {
     selectSpice = (level)=>{
         let spiceLevel = document.getElementsByClassName("spicelevel");
@@ -20,11 +19,9 @@ export class SectionTopping extends Component {
     }
 
     selectQty = (qty)=>{
-        // let qtySelected = document.getElementById("qty_"+qty)
         let selection = document.getElementsByClassName("qty")
-// console.log("Qty "+qty)
+
         for(var i=0;i<selection.length;i++){
-            // console.log(qty+" <===> "+i)
             if(i+1 === qty){
                 selection[i].classList.add("selected-qty")
             }else{
@@ -50,10 +47,9 @@ export class SectionTopping extends Component {
         }
 
         return (
-            <Container >
-                {/* <Numpad/> */}
+            <div >
                 <Row>
-                    <div className="col-md-6">
+                    <div className="col-md-12" id="section-spice" style={{width:"631px"}}>
                         <h3><b>Level Pedas</b></h3>
                         <div className="bar-wrapper">
                             <div className="spicelevel" id="level_1" onClick={()=>this.selectSpice(1)}></div>
@@ -65,23 +61,25 @@ export class SectionTopping extends Component {
                         <FontAwesomeIcon 
                             icon={faTimesCircle} 
                             size="3x" 
-                            style={{color:"#fb5151", cursor:"pointer", marginTop:"15px", marginLeft:"15px"}} 
+                            style={{color:"#cc2525", cursor:"pointer", marginTop:"30px", marginLeft:"15px"}} 
                             onClick={()=>this.selectSpice(0)} />
                     </div>
-                    <div className="col-md-6">
+                    <div className="col-md-12 mt-3" id="section-qty">
                         <h3><b>Jumlah</b></h3>
                         {qtyPad}
                     </div>
                 </Row>
                 <Row>
-                    <div className="col-md-6">
+                    <div className="col-md-12 mt-3" id="section-topping">
                         <h3><b>Topping</b></h3>
+                        <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/icons/cheese-icon.png`}  alt="Cheese" />
+                        <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/icons/corned-beef-icon.png`}  alt="Cornet" />
                     </div>
-                    <div className="col-md-6">
-                        Rp...
+                    <div className="col-md-12 mt-3 text-center" id="section-price">
+                        <span style={{fontSize:"50px"}}><b>Rp 18.000</b></span>
                     </div>
                 </Row>
-            </Container>
+            </div>
         )
     }
 }

@@ -3,6 +3,9 @@ import { Row, Col, Card} from "reactstrap";
 import ListProduct from "../Containers/ListProduct";
 import ListProductItem from "../Containers/ListProductItem"
 import Numpad from '../Containers/Numpad'
+import SectionTopping from '../Containers/SectionTopping'
+
+import './../css/style.css'
 
 export class Step1 extends Component {
 
@@ -280,6 +283,20 @@ export class Step1 extends Component {
         })
     }
 
+    showTopping = (action) =>{
+        var target = document.getElementById('hidden_content');
+        // console.log(target.offsetWidth)
+        if(action === "open"){
+            target.style.padding = "5px 15px"
+            target.style.width = "98%";
+            target.style.border = "3px solid";
+        }else{
+            target.style.padding = "0px"
+            target.style.width = "0px";
+            target.style.border = "0px";
+        }
+    }
+
     render() {
         const listDataProduct = this.state.dummyProduct.map((v, key) => 
                                 <Row className="m-2" key={key}>
@@ -294,6 +311,13 @@ export class Step1 extends Component {
             <div>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0">
+                        <div className="m-2 row" style={{backgroundColor:"#fff"}}>
+                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.showTopping("open")}>open</button>
+                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.showTopping("close")}>close</button>
+                        </div>
+                        <div id="hidden_content" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid"}}>
+                            <SectionTopping/>
+                        </div>
                         { listDataProduct }
                     </Col>
                     <Col md="6" lg="6" className="p-0">
@@ -302,7 +326,7 @@ export class Step1 extends Component {
                         </Row>
                     </Col>
                 </Row>
-
+                <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
                 <h2>Step {this.props.currentStep}</h2>
                 <p>Total Steps: {this.props.totalSteps}</p>
                 <p>Is Active: {this.props.isActive}</p>
