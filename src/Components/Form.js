@@ -6,7 +6,7 @@ import Step3 from './Step3'
 import BannerVideo from '../Containers/BannerVideo'
 import SectionTopping from '../Containers/SectionTopping'
 import Numpad from '../Containers/Numpad'
-import { Container } from "reactstrap";
+import { Container } from "reactstrap"
 
 export class Form extends Component {
         render() {

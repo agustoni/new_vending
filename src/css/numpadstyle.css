@@ -53,15 +53,15 @@ p
     color: #333;
     cursor: pointer;
 }
-.num:active, .num:active > div
-{
-    background-color: #cff0f5;
-    color: #fff;
+/* .num:active, .num:active > div */
+/* { */
+    /* background-color: #cff0f5; */
+    /* color: #fff; */
     /* transition-property: background-color .2s linear 0s; */
     /* -moz-transition: background-color .2s linear 0s; */
     /* -webkit-transition: background-color .2s linear 0s; */
     /* -o-transition: background-color .2s linear 0s; */
-}
+/* } */
 .row1{
     border: 1px solid #d6d0d0;
     /* border-radius: 15px; */
