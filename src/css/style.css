@@ -18,3 +18,18 @@
 #closeStep3:active{
     background-color:#00573f
 }
+#menuStep4{
+    background-color: #000;
+    color: #fff;
+    border: 0px solid;
+    height: 100%;
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    overflow-x: hidden;
+    transition: 0.5s;
+    width: 0px;
+    justify-content: center;
+    padding-top: 50px;
+}

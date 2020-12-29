@@ -4,8 +4,9 @@ import ListProduct from "../Containers/ListProduct";
 import ListProductItem from "../Containers/ListProductItem"
 import Numpad from '../Containers/Numpad'
 import SectionTopping from '../Containers/SectionTopping'
-import axios from 'axios'
+import Payment from '../Containers/Payment'
 
+import axios from 'axios'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleDoubleLeft} from '@fortawesome/free-solid-svg-icons'
 import './../css/style.css'
@@ -19,7 +20,8 @@ export class Step1 extends Component {
             product : [],
             productItems : [],
             dataOrder: {},
-            number : ''
+            number : '',
+            qrPayment: ''
         }
     }
 
@@ -31,7 +33,7 @@ export class Step1 extends Component {
 
     // AXIOS GET DATA PRODUCT USING HTTP REQUEST METHOD
     getDataProduct(){
-        axios.get('http://localhost/api/vending_machine/product.php')
+        axios.get('https://vending.biru.id/api/api_29dec20/product.php')
         .then(res => {
             this.setState({
                 // ...this.state,
@@ -47,7 +49,7 @@ export class Step1 extends Component {
     // AXIOS GET DATA PRODUCT ITEMS USING HTTP REQUEST METHOD
     getDataProductItem(idProduct) {
         console.log(idProduct)
-        axios.get('http://localhost/api/vending_machine/productdetail.php', {
+        axios.get('https://vending.biru.id/api/api_29dec20/productdetail.php', {
             params: {
               idproduct: idProduct
             }
@@ -89,20 +91,9 @@ export class Step1 extends Component {
         })
     }
 
+    //TOGGLE UNTUK HIDE AND SHOW TOPPING SECTION DAN NUMPAD
     clickHandlerProduct = (x)=>{
-        var target = document.getElementById('menuStep3')
-        var prdName = document.getElementById('productName')
-        console.log(x)
-
-        if(x.action === "open"){
-            target.style.width = "98%";
-            target.style.border = "3px solid";
-            prdName.innerHTML = x.bodytext
-        }else{
-            target.style.width = "0px";
-            target.style.border = "0px";
-            prdName.innerHTML = ""
-        }
+        this.handlerMenuStep3(x.action, x.bodytext)
 
         var menuStep3 = document.getElementsByClassName("menuStep3")
         for(var i=0;i<menuStep3.length;i++){
@@ -112,6 +103,47 @@ export class Step1 extends Component {
                 document.getElementById(menuStep3[i].id).style.display = "none"
             }
         }
+    }
+
+    clickHandlerOrder = (orderCategory)=>{
+        if(orderCategory === "mie"){
+            console.log("processing mie")
+        }else{
+            console.log("processing PPOB")
+        }
+
+        this.handlerMenuStep4("open")
+    }
+
+    handlerMenuStep3 = (action, name)=>{
+        var target = document.getElementById('menuStep3')
+        var prdName = document.getElementById('productName')
+        
+        if(action === "open"){
+            target.style.width = "100%";
+            target.style.border = "3px solid";
+            prdName.innerHTML = name
+        }else{
+            target.style.width = "0px";
+            target.style.border = "0px";
+            prdName.innerHTML = ""
+        }
+    }
+
+    handlerMenuStep4 = (action)=>{
+        var target = document.getElementById('menuStep4')
+
+        if(action === "open"){
+            target.style.width = "100%";
+            target.style.border = "3px solid";
+        }else{
+            target.style.width = "0px";
+            target.style.border = "0px";
+        }
+    }
+
+    cancelOrder = ()=>{
+        window.location.reload()
     }
 
     render() {
@@ -129,15 +161,10 @@ export class Step1 extends Component {
             <div>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0">
-                        {/* <div className="m-2 row" style={{backgroundColor:"#fff"}}>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"open", idCategory:2})}>indomie</button>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"open", idCategory:1})}>ppob</button>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"close"})}>close</button>
-                        </div> */}
-                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid", height:"800pxz"}}>
+                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid", height:"800px"}}>
                             <div style={{width:"87%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName">{}</h3>
-                                <SectionTopping/>
+                                <SectionTopping clickOrder={(x)=>this.clickHandlerOrder(x)}/>
                                 <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
                             </div>
                             <div id="closeStep3" style={{width:"13%", float:"left", height:"100%", borderLeft: "3px solid", position:"relative"}}
@@ -151,6 +178,9 @@ export class Step1 extends Component {
                         {listDataProduct}
                     </Col>
                     <Col md="6" lg="6" className="p-0">
+                        <div id="menuStep4" className="m-2 row">
+                            <Payment qrVal={this.state.qrPayment} cancel={()=>this.cancelOrder()}/> 
+                        </div>
                         <Row className="mx-auto row">
                         {listDataProductItems}
                         </Row>

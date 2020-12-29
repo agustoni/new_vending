@@ -2,6 +2,7 @@
   "name": "new_vending",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://vending.biru.id/build_29dec20",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.32",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",

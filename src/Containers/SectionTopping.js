@@ -3,7 +3,7 @@ import {Row} from "reactstrap";
 import './../css/topping.css';
 import './../css/style.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTimesCircle} from '@fortawesome/free-solid-svg-icons'
+import {faTimesCircle, faCheck} from '@fortawesome/free-solid-svg-icons'
 
 const qtyPad = []
 for(var i=1;i<=5;i++){
@@ -47,11 +47,32 @@ const SectionTopping = (props) => {
             <Row>
                 <div className="col-md-12 mt-3" id="section-topping">
                     <h3><b>Topping</b></h3>
-                    <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/icons/cheese-icon.png`}  alt="Cheese" />
-                    <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/icons/corned-beef-icon.png`}  alt="Cornet" />
+                    <div id="keju" style={{float:"left", position:"relative"}} onClick={()=>selectTopping("keju")}>
+                        <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/icons/cheese-icon.png`}  alt="Cheese" />
+                        <FontAwesomeIcon 
+                            icon={faCheck} 
+                            size="3x" 
+                            style={{color:"#81ed2f", cursor:"pointer", marginTop:"30px", 
+                                marginLeft:"15px", right: "5px", bottom: "0px", 
+                                position:"absolute", display:"none"}} 
+                            onClick={()=>selectSpice(0)} />
+                    </div>
+                    <div id="kornet" style={{float:"left", position:"relative"}} onClick={()=>selectTopping("kornet")}>
+                        <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/icons/corned-beef-icon.png`}  alt="Cornet" />
+                        <FontAwesomeIcon 
+                            icon={faCheck} 
+                            size="3x" 
+                            style={{color:"#81ed2f", cursor:"pointer", marginTop:"30px", 
+                                marginLeft:"15px", right: "5px", bottom: "0px", 
+                                position:"absolute", display:"none"}} 
+                            onClick={()=>selectSpice(0)} />
+                    </div>
                 </div>
                 <div className="col-md-12 mt-3 text-center" id="section-price" style={{borderTop:"3px solid"}}>
                     <span style={{fontSize:"50px"}}><b>Rp 18.000</b></span>
+                </div>
+                <div className="col-md-12 mt-3 text-center">
+                    <button className="btn btn-success" onClick={()=>props.clickOrder("mie")}>ORDER</button>
                 </div>
             </Row>
         </div>
@@ -80,6 +101,23 @@ const selectQty = (qty)=>{
             selection[i].classList.remove("selected-qty")
         }
     }
+}
+
+const selectTopping = (x)=>{
+    let el = document.getElementById(x)
+    let toppingIcon = el.getElementsByTagName('img')[0]
+    let checkIcon = el.getElementsByTagName('svg')[0]
+    
+    if(el.classList.contains("selected")){
+        toppingIcon.style.opacity = "1"
+        checkIcon.style.display = "none"
+        el.classList.remove("selected")
+    }else{
+        toppingIcon.style.opacity = "0.5"
+        checkIcon.style.display = "block"
+        el.classList.add("selected")
+    }
+    
 }
 
 export default SectionTopping
