@@ -18,8 +18,11 @@ export class Step1 extends Component {
         this.state = {
             product : [],
             productItems : [],
+            spiceLevel : [],
+            topping : [],
             dataOrder: {},
-            number : ''
+            number : '',
+            boolSelectProductItem : false
         }
     }
 
@@ -27,6 +30,12 @@ export class Step1 extends Component {
         // AMBIL ALL DATA PRODUCT
         this.getDataProduct()
         this.getDataProductItem(6) //DEFAULT STATIC ID PRODUCT INDOMIE SOTO
+    }
+
+    componentDidUpdate(prevProps, prevState, snapshot){
+        if(this.state.dataOrder != prevState.dataOrder){
+            console.log(this.state)
+        }
     }
 
     // AXIOS GET DATA PRODUCT USING HTTP REQUEST METHOD
@@ -65,6 +74,21 @@ export class Step1 extends Component {
         
     }
 
+    // AXIOS GET DATA SPICE LEVEL & TOPPING USING HTTP REQUEST METHOD
+    getDataAdditional(){
+        axios.get('http://localhost/api/vending_machine/additionalmie.php')
+        .then(res => {
+            this.setState({
+                ...this.state,
+                spiceLevel :res.data.spicelevel,
+                topping : res.data.topping
+            })
+        })
+        .catch(function (error) {
+
+        });
+    }
+
     //NUMPAD
     clickHandlerNumpad = (num)=>{
         let inputVal = this.state.number
@@ -90,9 +114,22 @@ export class Step1 extends Component {
     }
 
     clickHandlerProduct = (x)=>{
+        if(x.idCategory == 2){
+            this.getDataAdditional()
+        }
+        
         var target = document.getElementById('menuStep3')
         var prdName = document.getElementById('productName')
-        console.log(x)
+        this.setState({
+            ...this.state,
+            dataOrder :{
+                idProductDetail : x.id,
+                idProductCategory : x.idCategory,
+                price : x.sellingPrice,
+                code: x.code
+            },
+            boolSelectProductItem : true,
+        })
 
         if(x.action === "open"){
             target.style.width = "98%";
@@ -114,6 +151,56 @@ export class Step1 extends Component {
         }
     }
 
+    clickHandlerSubmitOrder = (data) => {
+
+    }
+
+    changeHandlerSpiceLevel = (level, price) =>{
+        let dataOrder = this.state.dataOrder
+        dataOrder['spiceLevel'] = level
+        dataOrder['spiceLevelPrice'] = price
+        this.setState({
+            ...this.state,
+            dataOrder,
+            boolSelectProductItem : false,
+        }, () => {
+            let spiceLevel = document.getElementsByClassName("spicelevel");
+            for(var i=0;i<spiceLevel.length;i++){
+                if(i<level){
+                    spiceLevel[i].classList.add("selected-spice")
+                }else{
+                    spiceLevel[i].classList.remove("selected-spice")
+                }
+            }
+            this.calc()
+        })
+    }
+
+    changeHandlerQty = (data) => {
+        let dataOrder = this.state.dataOrder
+        dataOrder['qty'] = data
+        this.setState({
+            ...this.state,
+            dataOrder,
+            boolSelectProductItem : false,
+        }, () => {
+            let selection = document.getElementsByClassName("qty")
+            for(var i=0;i<selection.length;i++){
+                if(i+1 === data){
+                    selection[i].classList.add("selected-qty")
+                }else{
+                    selection[i].classList.remove("selected-qty")
+                }
+            }
+            this.calc()
+        })
+    }
+
+    calc = () => {
+        let dataOrder = this.state.dataOrder
+        console.log(dataOrder)
+    }
+
     render() {
         const listDataProduct = this.state.product.map((v, key) => 
                                 <Row className="m-2" key={key}>
@@ -122,22 +209,17 @@ export class Step1 extends Component {
                     )
         
         let listDataProductItems = this.state.productItems.map((v, key) => 
-            <ListProductItem click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id}></ListProductItem>
+            <ListProductItem click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code}></ListProductItem>
         )
 
         return (
             <div>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0">
-                        {/* <div className="m-2 row" style={{backgroundColor:"#fff"}}>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"open", idCategory:2})}>indomie</button>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"open", idCategory:1})}>ppob</button>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"close"})}>close</button>
-                        </div> */}
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid", height:"800pxz"}}>
                             <div style={{width:"87%", float:"left", padding:"0px 15px"}}>
-                                <h3 id="productName">{}</h3>
-                                <SectionTopping/>
+                                <h3 id="productName" className="my-5 text-center">{}</h3>
+                                <SectionTopping dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={this.state.spiceLevel} topping={this.state.topping}/>
                                 <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
                             </div>
                             <div id="closeStep3" style={{width:"13%", float:"left", height:"100%", borderLeft: "3px solid", position:"relative"}}
@@ -156,15 +238,6 @@ export class Step1 extends Component {
                         </Row>
                     </Col>
                 </Row>
-
-                <h2>Step {this.props.currentStep}</h2>
-                <p>Total Steps: {this.props.totalSteps}</p>
-                <p>Is Active: {this.props.isActive}</p>
-                <p><button onClick={this.props.previousStep}>Previous Step</button></p>
-                <p><button onClick={this.props.nextStep}>Next Step</button></p>
-                <p><button onClick={()=>this.props.goToStep(2)}>Step 2</button></p>
-                <p><button onClick={this.props.firstStep}>First Step</button></p>
-                <p><button onClick={this.props.lastStep}>Last Step</button></p> */}
             </div>
             
         )
