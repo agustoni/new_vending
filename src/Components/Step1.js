@@ -42,35 +42,6 @@ export class Step1 extends Component {
 
         });
 
-
-        // this.setState({
-        //     product : [
-        //         {
-        //             id: 1,
-        //             name: 'Indomie Soto',
-        //             image: 'logo-indomie-soto.png',
-        //             bodyText: 'Indomie soto dengan berbagai macam varian rasa',
-        //             color: '#10ff00',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 2,
-        //             name: 'Mie Sedap Goreng',
-        //             image: 'logo-mie-sedap-goreng.png',
-        //             bodyText: 'Indomie soto dengan berbagai macam varian rasa',
-        //             color: '#ffffff',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 3,
-        //             name: 'Ovo',
-        //             image: 'logo-ovo.png',
-        //             bodyText: 'Saldo Ovo',
-        //             color: '#4c3494',
-        //             textColor: '#ffffff'
-        //         }
-        //     ]
-        // })
     }
 
     // AXIOS GET DATA PRODUCT ITEMS USING HTTP REQUEST METHOD
@@ -84,208 +55,14 @@ export class Step1 extends Component {
         .then(res => {
             this.setState({
                 productItems :res.data
+            }, ()=>{
+                console.log(this.state.productItems)
             })
         })
         .catch(function (error) {
 
         });
-        // DUMMY
-        // let data = '';
-        // if(idProduct === 1){
-        //     data = [
-        //         {
-        //             id: 1,
-        //             idProduct: 1,
-        //             image: 'logo-indomie-soto.png',
-        //             color: '#10ff00',
-        //             title: 'Indomie Soto XXX',
-        //             bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 2,
-        //             idProduct: 1,
-        //             image: 'logo-indomie-soto.png',
-        //             color: '#10ff00',
-        //             title: 'Indomie Soto XXX',
-        //             bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 3,
-        //             idProduct: 1,
-        //             image: 'logo-indomie-soto.png',
-        //             color: '#10ff00',
-        //             title: 'Indomie Soto XXX',
-        //             bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 4,
-        //             idProduct: 1,
-        //             image: 'logo-indomie-soto.png',
-        //             color: '#10ff00',
-        //             title: 'Indomie Soto XXX',
-        //             bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 5,
-        //             idProduct: 1,
-        //             image: 'logo-indomie-soto.png',
-        //             color: '#10ff00',
-        //             title: 'Indomie Soto XXX',
-        //             bodyText: 'Ini adalah indomie soto dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         }
-        //     ]
-        // }else if (idProduct === 2){
-        //     data = [
-        //         {
-        //             id: 1,
-        //             idProduct: 2,
-        //             image: 'logo-mie-sedap-goreng.png',
-        //             color: '#ffffff',
-        //             title: 'Mie Sedap Goreng XXX',
-        //             bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 1,
-        //             idProduct: 2,
-        //             image: 'logo-mie-sedap-goreng.png',
-        //             color: '#ffffff',
-        //             title: 'Mie Sedap Goreng XXX',
-        //             bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 3,
-        //             idProduct: 2,
-        //             image: 'logo-mie-sedap-goreng.png',
-        //             color: '#ffffff',
-        //             title: 'Mie Sedap Goreng XXX',
-        //             bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 4,
-        //             idProduct: 2,
-        //             image: 'logo-mie-sedap-goreng.png',
-        //             color: '#ffffff',
-        //             title: 'Mie Sedap Goreng XXX',
-        //             bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //         {
-        //             id: 5,
-        //             idProduct: 2,
-        //             image: 'logo-mie-sedap-goreng.png',
-        //             color: '#ffffff',
-        //             title: 'Mie Sedap Goreng XXX',
-        //             bodyText: 'Ini adalah mie sedap goreng dengan varian rasa xxx',
-        //             price: '',
-        //             textColor: '#000000'
-        //         },
-        //     ]
-        // }else if (idProduct === 3){
-        //     data = [
-        //         {
-        //             id: 1,
-        //             idProduct: 3,
-        //             image: 'logo-ovo.png',
-        //             color: '#4c3494',
-        //             title: 'Saldo Ovo 10000',
-        //             bodyText: '',
-        //             price: '12000',
-        //             textColor: '#ffffff'
-        //         },
-        //         {
-        //             id: 2,
-        //             idProduct: 3,
-        //             image: 'logo-ovo.png',
-        //             color: '#4c3494',
-        //             title: 'Saldo Ovo 10000',
-        //             bodyText: '',
-        //             price: '12000',
-        //             textColor: '#ffffff'
-        //         },
-        //         {
-        //             id: 3,
-        //             idProduct: 3,
-        //             image: 'logo-ovo.png',
-        //             color: '#4c3494',
-        //             title: 'Saldo Ovo 10000',
-        //             bodyText: '',
-        //             price: '12000',
-        //             textColor: '#ffffff'
-        //         },
-        //         {
-        //             id: 4,
-        //             idProduct: 3,
-        //             image: 'logo-ovo.png',
-        //             color: '#4c3494',
-        //             title: 'Saldo Ovo 10000',
-        //             bodyText: '',
-        //             price: '12000',
-        //             textColor: '#ffffff'
-        //         },
-        //         {
-        //             id: 5,
-        //             idProduct: 3,
-        //             image: 'logo-ovo.png',
-        //             color: '#4c3494',
-        //             title: 'Saldo Ovo 10000',
-        //             bodyText: '',
-        //             price: '12000',
-        //             textColor: '#ffffff'
-        //         },
-        //         {
-        //             id: 6,
-        //             idProduct: 3,
-        //             image: 'logo-ovo.png',
-        //             color: '#4c3494',
-        //             title: 'Saldo Ovo 10000',
-        //             bodyText: '',
-        //             price: '12000',
-        //             textColor: '#ffffff'
-        //         },
-        //         {
-        //             id: 7,
-        //             idProduct: 3,
-        //             image: 'logo-ovo.png',
-        //             color: '#4c3494',
-        //             title: 'Saldo Ovo 10000',
-        //             bodyText: '',
-        //             price: '12000',
-        //             textColor: '#ffffff'
-        //         },
-        //         {
-        //             id: 8,
-        //             idProduct: 3,
-        //             image: 'logo-ovo.png',
-        //             color: '#4c3494',
-        //             title: 'Saldo Ovo 10000',
-        //             bodyText: '',
-        //             price: '12000',
-        //             textColor: '#ffffff'
-        //         },
-        //     ]
-        // }
-        // END DUMMY
-
-        // this.setState({
-        //     productItems : data
-        // })
+        
     }
 
     //NUMPAD
@@ -312,46 +89,24 @@ export class Step1 extends Component {
         })
     }
 
-    // ================== buat testing slide step 3 ================== 
-    clickHandlerStep3 = (action, el=null) =>{
+    clickHandlerProduct = (x)=>{
         var target = document.getElementById('menuStep3')
+        var prdName = document.getElementById('productName')
+        console.log(x)
 
-        if(action === "open"){
+        if(x.action === "open"){
             target.style.width = "98%";
             target.style.border = "3px solid";
-
+            prdName.innerHTML = x.bodytext
         }else{
             target.style.width = "0px";
             target.style.border = "0px";
+            prdName.innerHTML = ""
         }
 
         var menuStep3 = document.getElementsByClassName("menuStep3")
         for(var i=0;i<menuStep3.length;i++){
-            if(el === menuStep3[i].id){
-                document.getElementById(menuStep3[i].id).style.display = "block"
-            }else{
-                document.getElementById(menuStep3[i].id).style.display = "none"
-            }
-        }
-    }
-
-    clickHandlerProduct = (action, id, idCategory, sellingPrice)=>{
-        var target = document.getElementById('menuStep3')
-        // console.log("click")
-        // console.log(action+" === "+id+" === "+idCategory+" === "+sellingPrice)
-
-        if(action === "open"){
-            target.style.width = "98%";
-            target.style.border = "3px solid";
-
-        }else{
-            target.style.width = "0px";
-            target.style.border = "0px";
-        }
-
-        var menuStep3 = document.getElementsByClassName("menuStep3")
-        for(var i=0;i<menuStep3.length;i++){
-            if("menuStep3_"+idCategory === menuStep3[i].id){
+            if("menuStep3_"+x.idCategory === menuStep3[i].id){
                 document.getElementById(menuStep3[i].id).style.display = "block"
             }else{
                 document.getElementById(menuStep3[i].id).style.display = "none"
@@ -367,25 +122,26 @@ export class Step1 extends Component {
                     )
         
         let listDataProductItems = this.state.productItems.map((v, key) => 
-            <ListProductItem click={(action, id, idCategory, sellingPrice)=>this.clickHandlerProduct("open", id, idCategory, sellingPrice)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id}></ListProductItem>
+            <ListProductItem click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id}></ListProductItem>
         )
 
         return (
             <div>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0">
-                        <div className="m-2 row" style={{backgroundColor:"#fff"}}>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerStep3("open", "menuStep3Indomie")}>indomie</button>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerStep3("open", "menuStep3Ppob")}>ppob</button>
-                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerStep3("close")}>close</button>
-                        </div>
+                        {/* <div className="m-2 row" style={{backgroundColor:"#fff"}}>
+                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"open", idCategory:2})}>indomie</button>
+                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"open", idCategory:1})}>ppob</button>
+                            <button style={{marginLeft: "50px", zIndex: "5"}} onClick={() => this.clickHandlerProduct({action:"close"})}>close</button>
+                        </div> */}
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid", height:"800pxz"}}>
                             <div style={{width:"87%", float:"left", padding:"0px 15px"}}>
+                                <h3 id="productName">{}</h3>
                                 <SectionTopping/>
                                 <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
                             </div>
                             <div id="closeStep3" style={{width:"13%", float:"left", height:"100%", borderLeft: "3px solid", position:"relative"}}
-                            onClick={()=>this.clickHandlerStep3('close')}>
+                            onClick={()=>this.clickHandlerProduct({action:"close"})}>
                             <FontAwesomeIcon 
                                 icon={faAngleDoubleLeft} 
                                 size="3x" 
