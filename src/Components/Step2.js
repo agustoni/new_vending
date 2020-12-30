@@ -251,6 +251,9 @@ export class Step2 extends Component {
                                 style={{color: "#848484", cursor: "pointer", position: "absolute", left: "0px", top: "45%"}} />
                             </div>
                         </div>
+                        <div className="row m-2">
+                            <BackNavigation click={this.props.previousStep}></BackNavigation>
+                        </div>
                         {listDataProduct}
                     </Col>
                     <Col md="6" lg="6" className="p-0">
@@ -262,7 +265,6 @@ export class Step2 extends Component {
                         </Row>
                     </Col>
                 </Row>
-                <p><BackNavigation click={this.props.previousStep}></BackNavigation></p>
                 
             </div>
             
