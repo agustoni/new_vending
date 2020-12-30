@@ -12,8 +12,8 @@ const Payment = (props)=>{
         <div>
             <QRCode size={300} level="H" value={props.qrVal} />
             <Row>
-                <div className="col-md-12 text-center">
-                    <button className="btn btn-danger" onClick={()=>props.cancelOrder()}>Cancel</button>
+                <div className="col-md-12 text-center mt-5">
+                    <button className="btn btn-danger col-md-12" onClick={()=>props.cancelOrder()}>Cancel</button>
                 </div>
             </Row>
         </div>

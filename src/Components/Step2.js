@@ -210,15 +210,8 @@ export class Step2 extends Component {
     payment = ()=>{
         var target = document.getElementById('menuStep4')
         
-        // if(x.action === "open"){
-            target.style.width = "100%";
-            target.style.border = "3px solid #dfdfdf";
-            // prdName.innerHTML = x.bodytext
-        // }else{
-        //     target.style.width = "0px";
-        //     target.style.border = "0px";
-        //     prdName.innerHTML = ""
-        // }
+        target.style.width = "100%";
+        target.style.border = "3px solid #dfdfdf";
     }
 
     cancelOrder = ()=>{
@@ -226,9 +219,14 @@ export class Step2 extends Component {
     }
 
     closeStep3 = ()=>{
-        var target = document.getElementById('menuStep3')
-        target.style.width = "0px";
-        target.style.border = "0px";
+        var target1 = document.getElementById('menuStep3')
+        target1.style.width = "0px";
+        target1.style.border = "0px";
+
+        var target2 = document.getElementById('menuStep4')
+        
+        target2.style.width = "0px";
+        target2.style.border = "0px";
     }
 
     render() {
@@ -249,15 +247,9 @@ export class Step2 extends Component {
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0">
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"800pxz"}}>
-                            <div className="" onClick={()=>this.closeStep3({action:"close"})}>
-                                <FontAwesomeIcon 
-                                icon={faArrowAltCircleLeft} 
-                                size="3x" 
-                                style={{color:"#000", cursor:"pointer", position: "absolute", top: "5px", left: "10px", color: "#ff8d00"}}  />
-                            </div>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
-                                <SectionTopping dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={()=>this.payment()}/>
+                                <SectionTopping close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={()=>this.payment()}/>
                                 <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
                             </div>
                             {/* <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}
@@ -267,6 +259,9 @@ export class Step2 extends Component {
                                 size="3x" 
                                 style={{color: "#848484", cursor: "pointer", position: "absolute", left: "0px", top: "45%"}} />
                             </div> */}
+                        </div>
+                        <div className="row m-2">
+                            <BackNavigation click={this.props.previousStep}></BackNavigation>
                         </div>
                         {listDataProduct}
                     </Col>
@@ -279,7 +274,6 @@ export class Step2 extends Component {
                         </Row>
                     </Col>
                 </Row>
-                <p><BackNavigation click={this.props.previousStep}></BackNavigation></p>
                 
             </div>
             

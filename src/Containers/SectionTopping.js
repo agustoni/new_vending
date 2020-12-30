@@ -3,7 +3,7 @@ import {Row} from "reactstrap";
 import './../css/topping.css';
 import './../css/style.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTimesCircle, faCheck} from '@fortawesome/free-solid-svg-icons'
+import {faTimesCircle, faCheck, faArrowAltCircleLeft} from '@fortawesome/free-solid-svg-icons'
 
 const SectionTopping = (props) => {
     const qtyPad = []
@@ -136,9 +136,14 @@ const SectionTopping = (props) => {
                 <div className="col-md-12 mt-3" id="section-price" style={{borderTop:"3px solid #dfdfdf"}}>
                     {priceDetail()}
                 </div>
-                <div className="col-md-12 mt-3 text-center">
-                    <button className="btn btn-success col-md-12" onClick={()=>props.clickOrder("mie")}>ORDER</button>
+            </Row>
+            <Row>
+                <div className="col-md-6 mt-3 text-center" >
+                    <button className="btn btn-primary rounded-circle text-white" onClick={()=>props.close({action:"close"})} style={{width: "150px", height: "150px", fontSize: "35px", fontWeight: "600"}}>BACK</button>
                 </div>
+                <div className="col-md-6 mt-3 text-center">
+                    <button className="btn btn-success rounded-circle" onClick={()=>props.clickOrder("mie")} style={{width: "150px", height: "150px", fontSize: "35px", fontWeight: "600"}}>ORDER</button>
+                </div>    
             </Row>
         </div>
     )
