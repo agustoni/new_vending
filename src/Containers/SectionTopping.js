@@ -133,16 +133,16 @@ const SectionTopping = (props) => {
                     <h3><b>Topping</b></h3>
                     {sectionTopping}
                 </div>
-                <div className="col-md-12 mt-3" id="section-price" style={{borderTop:"3px solid"}}>
+                <div className="col-md-12 mt-3" id="section-price" style={{borderTop:"3px solid #dfdfdf"}}>
                     
                     {priceDetail()}
                     {/* <span style={{fontSize:"30px"}}>{extSpicePrice()}</span><br/>
                     <span style={{fontSize:"30px"}}>{extToppingPrice()}</span><br/> */}
                     
                 </div>
-                {/* <div className="col-md-12 mt-3 text-center">
+                <div className="col-md-12 mt-3 text-center">
                     <button className="btn btn-success" onClick={()=>props.clickOrder("mie")}>ORDER</button>
-                </div> */}
+                </div>
             </Row>
         </div>
     )

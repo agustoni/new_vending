@@ -13,7 +13,7 @@ const ListProductItem = (props) => {
     return (
         // props.click("open", id, idCategory, sellingPrice
         <div className={grid} onClick={()=>props.click(dataPrdItem)}>
-            <Card body inverse style={{ backgroundColor: backgroundColor, borderColor: backgroundColor, cursor:'pointer' }} className="rounded-0 text-dark text-center">
+            <Card body inverse style={{ backgroundColor: backgroundColor, borderColor: "dec5ff", borderWidth: "5px", cursor:'pointer' }} className="rounded-0 text-dark text-center">
                 <CardImg top width="100%" src={`${process.env.PUBLIC_URL}/images/product/${image}`}  alt="Card image cap" />
                 <CardTitle tag="h5" style={{color:textColor}}>{title}</CardTitle>
                 <CardText style={{color:textColor}}>{bodytext}</CardText>

@@ -8,7 +8,7 @@ const ListProductHome = (props) => {
 
     return (
         <div className={grid} >
-            <Card body inverse style={{ backgroundColor: backgroundColor, borderColor: backgroundColor, cursor:'pointer' }} className="rounded-0 text-center" onClick={()=>click(id)}>
+            <Card body inverse style={{ backgroundColor: backgroundColor, borderColor: "dec5ff", borderWidth: "5px", cursor:'pointer' }} className="rounded-0 text-center" onClick={()=>click(id)}>
                 <CardImg top width="100%" src={`${process.env.PUBLIC_URL}/images/product/${image}`}  alt="Card image cap" />
                 <CardTitle tag="h5" style={{color:textColor}}>{title}</CardTitle>
                 <CardText style={{color:textColor}}>{bodytext}</CardText>

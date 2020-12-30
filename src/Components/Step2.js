@@ -7,6 +7,9 @@ import SectionTopping from '../Containers/SectionTopping'
 import axios from 'axios'
 import BackNavigation from '../Containers/BackNavigation'
 import BannerVideo from '../Containers/BannerVideo'
+import Payment from '../Containers/Payment'
+
+
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faAngleDoubleLeft} from '@fortawesome/free-solid-svg-icons'
 import './../css/style.css'
@@ -96,7 +99,7 @@ export class Step2 extends Component {
 
         if(x.action === "open"){
             target.style.width = "98%";
-            target.style.border = "3px solid";
+            target.style.border = "3px solid #dfdfdf";
             prdName.innerHTML = x.bodytext
         }else{
             target.style.width = "0px";
@@ -197,6 +200,24 @@ export class Step2 extends Component {
         console.log(dataOrder)
     }
 
+    payment = ()=>{
+        var target = document.getElementById('menuStep4')
+        
+        // if(x.action === "open"){
+            target.style.width = "100%";
+            target.style.border = "3px solid #dfdfdf";
+            // prdName.innerHTML = x.bodytext
+        // }else{
+        //     target.style.width = "0px";
+        //     target.style.border = "0px";
+        //     prdName.innerHTML = ""
+        // }
+    }
+
+    cancelOrder = ()=>{
+        window.location.reload()
+    }
+
     render() {
         let {product, spiceLevel, topping, selectedProductHome} = this.props
 
@@ -216,23 +237,26 @@ export class Step2 extends Component {
                 <BannerVideo videoUrl="indomie_default.mp4"></BannerVideo>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0">
-                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#000", color:"#fff", border: "0px solid", height:"800pxz"}}>
-                            <div style={{width:"87%", float:"left", padding:"0px 15px"}}>
+                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"800pxz"}}>
+                            <div style={{width:"90%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
-                                <SectionTopping dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)}/>
+                                <SectionTopping dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={()=>this.payment()}/>
                                 <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
                             </div>
-                            <div id="closeStep3" style={{width:"13%", float:"left", height:"100%", borderLeft: "3px solid", position:"relative"}}
+                            <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}
                             onClick={()=>this.clickHandlerProduct({action:"close"})}>
                             <FontAwesomeIcon 
                                 icon={faAngleDoubleLeft} 
                                 size="3x" 
-                                style={{color: "rgb(255 255 255)", cursor: "pointer", position: "absolute", left: "10px", top: "45%"}} />
+                                style={{color: "#848484", cursor: "pointer", position: "absolute", left: "0px", top: "45%"}} />
                             </div>
                         </div>
                         {listDataProduct}
                     </Col>
                     <Col md="6" lg="6" className="p-0">
+                        <div id="menuStep4" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "3px solid", height:"800pxz"}}>
+                            <Payment qrVal="" cancelOrder={()=>this.cancelOrder()}/>
+                        </div>
                         <Row className="mx-auto row">
                         {listDataProductItems}
                         </Row>

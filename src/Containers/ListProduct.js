@@ -5,7 +5,7 @@ const ListProduct = (props) => {
     let {image, backgroundColor, title, bodytext, click, textColor, idCategory} = props
     return (
         <ListGroup className="w-100 rounded-0" onClick={click} data-category={idCategory}>
-            <ListGroupItem style={{ backgroundColor : backgroundColor, borderColor: backgroundColor, cursor: 'pointer'}} >
+            <ListGroupItem style={{ backgroundColor : backgroundColor, borderColor: "dec5ff", borderWidth: "5px", cursor: 'pointer'}} >
                 <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/product/${image}`}  alt="Card image cap" />
                 <div className="ml-2">
                     <h3 style={{color:textColor}}>{title}</h3>
