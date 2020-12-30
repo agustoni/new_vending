@@ -12,10 +12,10 @@ const Numpad = (props) => {
         <div className="container menuStep3" id="menuStep3_1" style={{display: "none"}}>
             <div className="row">
                 <div className="col-md-11" style={{marginLeft:"auto", marginRight:"auto"}}>
-                    <div className="row1" style={{width:"397px"}}>
+                    <div className="">
                         <div className="col-md-12">
                             <input type="text" name="name" id="telNumber" className="form-control tel" value={numberValue} readOnly/>
-                            <div className="num-pad">
+                            <div className="row justify-content-center align-items-center p-2">
                             {getBtn}
                             </div>
                             <div className="clearfix"></div>
@@ -33,24 +33,24 @@ const createBtn = (x)=>{
     const btnEl = btnChar.map((num, key)  => {
         if(num === "delete"){
             return (
-                <div className="span4" key={key}>
-                    <div className="num  d-flex justify-content-center align-items-center" onClick={()=>x.click(num)}>
+                <div className="col-4 mx-auto my-2" key={key}>
+                    <div className="num d-flex justify-content-center align-items-center rounded-circle" onClick={()=>x.click(num)}>
                         <FontAwesomeIcon icon={faBackspace} size="3x" />
                     </div>
                 </div>
             )
         }else if(num === "ok"){
             return (
-                <div className="span4" key={key}>
-                    <div className="num  d-flex justify-content-center align-items-center" onClick={()=>x.click(num)}>
+                <div className="col-4 mx-auto my-2" key={key}>
+                    <div className="num d-flex justify-content-center align-items-center rounded-circle" onClick={()=>x.click(num)}>
                         <FontAwesomeIcon icon={faCheck} size="3x" />
                     </div>
                 </div>
             )
         }else{
             return (
-                <div className="span4" key={key}>
-                    <div className="num d-flex justify-content-center align-items-center" onClick={()=>x.click(num)}>
+                <div className="col-4 mx-auto my-2" key={key}>
+                    <div className="num d-flex justify-content-center align-items-center rounded-circle" onClick={()=>x.click(num)}>
                         <div className="txt btn-number">
                             {num}
                         </div>

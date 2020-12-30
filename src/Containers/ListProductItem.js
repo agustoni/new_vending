@@ -5,10 +5,10 @@ import {
 } from 'reactstrap';
 
 const ListProductItem = (props) => {
-    let {grid, image, title, bodytext, backgroundColor, textColor, sellingPrice, idCategory, id} = props;
+    let {grid, image, title, bodytext, backgroundColor, textColor, sellingPrice, idCategory, id, code} = props;
     let dataPrdItem = {
         action: "open",
-        id, idCategory, sellingPrice, bodytext
+        id, idCategory, sellingPrice, bodytext, code
     }
     return (
         // props.click("open", id, idCategory, sellingPrice
