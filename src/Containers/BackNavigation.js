@@ -5,7 +5,7 @@ import { faArrowCircleLeft } from '@fortawesome/free-solid-svg-icons'
 const BackNavigation = (props) => {
     let {click} = props
     return (
-        <FontAwesomeIcon className="text-white" icon={faArrowCircleLeft} size="6x" onClick={click} style={{'cursor':'pointer'}}/>
+        <FontAwesomeIcon icon={faArrowCircleLeft} size="6x" onClick={click} style={{'cursor':'pointer'}}/>
     )
 }
 

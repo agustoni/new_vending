@@ -40,13 +40,13 @@ const SectionTopping = (props) => {
         let action
 
         if(el.classList.contains("selected")){
-            toppingIcon.style.opacity = "1"
+            toppingIcon.style.opacity = "0.5"
             checkIcon.style.display = "none"
             el.classList.remove("selected")
             // price = 0
             action = "remove"
         }else{
-            toppingIcon.style.opacity = "0.5"
+            toppingIcon.style.opacity = "1"
             checkIcon.style.display = "block"
             el.classList.add("selected")
             // price = x.price
@@ -59,7 +59,7 @@ const SectionTopping = (props) => {
     const sectionTopping = topping.map((v, key) =>
         <div key={key} id={v.material} style={{float:"left", position:"relative"}} 
             onClick={()=>selectTopping({'material':v.material, "idTopping":v.id, "price":v.price})}>
-            <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/icons/${v.icon}`}  alt={v.material} />
+            <img className="float-left mr-2" src={`${process.env.PUBLIC_URL}/images/icons/${v.icon}`}  alt={v.material} style={{opacity: "0.5"}}/>
             <FontAwesomeIcon 
                 icon={faCheck} 
                 size="3x" 
@@ -134,14 +134,10 @@ const SectionTopping = (props) => {
                     {sectionTopping}
                 </div>
                 <div className="col-md-12 mt-3" id="section-price" style={{borderTop:"3px solid #dfdfdf"}}>
-                    
                     {priceDetail()}
-                    {/* <span style={{fontSize:"30px"}}>{extSpicePrice()}</span><br/>
-                    <span style={{fontSize:"30px"}}>{extToppingPrice()}</span><br/> */}
-                    
                 </div>
                 <div className="col-md-12 mt-3 text-center">
-                    <button className="btn btn-success" onClick={()=>props.clickOrder("mie")}>ORDER</button>
+                    <button className="btn btn-success col-md-12" onClick={()=>props.clickOrder("mie")}>ORDER</button>
                 </div>
             </Row>
         </div>

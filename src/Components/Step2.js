@@ -11,7 +11,7 @@ import Payment from '../Containers/Payment'
 
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faAngleDoubleLeft} from '@fortawesome/free-solid-svg-icons'
+import {faAngleDoubleLeft, faArrowAltCircleLeft} from '@fortawesome/free-solid-svg-icons'
 import './../css/style.css'
 
 export class Step2 extends Component {
@@ -23,7 +23,8 @@ export class Step2 extends Component {
             productItems : [],
             dataOrder: {},
             number : '',
-            boolSelectProductItem : false
+            boolSelectProductItem : false,
+            activeSelectedProductItem : null,
         }
     }
 
@@ -86,6 +87,11 @@ export class Step2 extends Component {
     clickHandlerProduct = (x)=>{
         var target = document.getElementById('menuStep3')
         var prdName = document.getElementById('productName')
+
+        
+        // test.classList.remove("style")
+// console.log()
+
         this.setState({
             ...this.state,
             dataOrder :{
@@ -95,6 +101,7 @@ export class Step2 extends Component {
                 code: x.code
             },
             boolSelectProductItem : true,
+            activeSelectedProductItem: x.id
         })
 
         if(x.action === "open"){
@@ -218,10 +225,14 @@ export class Step2 extends Component {
         window.location.reload()
     }
 
+    closeStep3 = ()=>{
+        var target = document.getElementById('menuStep3')
+        target.style.width = "0px";
+        target.style.border = "0px";
+    }
+
     render() {
         let {product, spiceLevel, topping, selectedProductHome} = this.props
-
-        console.log(spiceLevel)
         let listDataProduct = product.map((v, key) =>
                                 <Row className="m-2"key={key}>
                                     <ListProduct click={()=>this.getDataProductItem(v.id)} image={v.image} backgroundColor={v.color} title={v.product} bodytext={v.text} textColor={v.text_color} idCategory={v.id_category}></ListProduct>
@@ -229,7 +240,7 @@ export class Step2 extends Component {
                     )
         
         let listDataProductItems = this.state.productItems.map((v, key) => 
-            <ListProductItem click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code}></ListProductItem>
+            <ListProductItem activeSelectedProductItem={this.state.activeSelectedProductItem} click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code}></ListProductItem>
         )
 
         return (
@@ -238,18 +249,24 @@ export class Step2 extends Component {
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0">
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"800pxz"}}>
-                            <div style={{width:"90%", float:"left", padding:"0px 15px"}}>
+                            <div className="" onClick={()=>this.closeStep3({action:"close"})}>
+                                <FontAwesomeIcon 
+                                icon={faArrowAltCircleLeft} 
+                                size="3x" 
+                                style={{color:"#000", cursor:"pointer", position: "absolute", top: "5px", left: "10px", color: "#ff8d00"}}  />
+                            </div>
+                            <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
                                 <SectionTopping dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={()=>this.payment()}/>
                                 <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
                             </div>
-                            <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}
+                            {/* <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}
                             onClick={()=>this.clickHandlerProduct({action:"close"})}>
                             <FontAwesomeIcon 
                                 icon={faAngleDoubleLeft} 
                                 size="3x" 
                                 style={{color: "#848484", cursor: "pointer", position: "absolute", left: "0px", top: "45%"}} />
-                            </div>
+                            </div> */}
                         </div>
                         {listDataProduct}
                     </Col>
