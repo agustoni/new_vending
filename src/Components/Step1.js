@@ -178,8 +178,37 @@ export class Step1 extends Component {
         })
     }
 
-    changeHandlerTopping = (topping, price)=>{
-        console.log(topping+" === "+price)
+    changeHandlerTopping = (topping, price, action)=>{
+        let dataOrder = this.state.dataOrder
+
+        if(dataOrder['topping'] == null){
+            dataOrder['topping'] = []
+            dataOrder['toppingPrice'] = 0
+        }
+        
+        if(action === "add"){
+            dataOrder['topping'].push(topping)
+            dataOrder['toppingPrice'] = Number(dataOrder['toppingPrice']) + Number(price)
+        }else{
+            if(dataOrder['topping'].length > 1){
+                let index = dataOrder['topping'].indexOf(topping);
+                if (index > -1) {
+                    dataOrder['topping'].splice(index, 1);
+                }
+                dataOrder['toppingPrice'] = Number(dataOrder['toppingPrice']) - Number(price)
+            }else{
+                dataOrder['topping'] = null
+                dataOrder['toppingPrice'] = 0
+            }
+        }
+
+        this.setState({
+            ...this.state,
+            dataOrder,
+            // boolSelectProductItem : false,
+        }, () => {
+            this.calc()
+        })
     }
 
     changeHandlerQty = (data) => {
@@ -228,7 +257,7 @@ export class Step1 extends Component {
                                 <SectionTopping 
                                     dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} 
                                     changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  
-                                    changeTopping = {(topping, price) => this.changeHandlerTopping(topping, price)}
+                                    changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)}
                                     click={(data) => this.clickHandlerSubmitOrder(data)} 
                                     boolSelectProductItem={this.state.boolSelectProductItem} 
                                     spiceLevel={this.state.spiceLevel} topping={this.state.topping}/>

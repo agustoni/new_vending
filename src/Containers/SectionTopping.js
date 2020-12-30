@@ -9,11 +9,6 @@ const SectionTopping = (props) => {
     const qtyPad = []
     let {dataOrder, boolSelectProductItem, changeQty, changeSpiceLevel, changeTopping, spiceLevel, topping} = props
     
-    console.log("spice level")
-    console.log(spiceLevel)
-    console.log("topping")
-    console.log(topping)
-    
     if(boolSelectProductItem){
         reset();
     }
@@ -41,21 +36,24 @@ const SectionTopping = (props) => {
         let toppingIcon = el.getElementsByTagName('img')[0]
         let checkIcon = el.getElementsByTagName('svg')[0]
         
-        let price
+        let price= x.price
+        let action
 
         if(el.classList.contains("selected")){
             toppingIcon.style.opacity = "1"
             checkIcon.style.display = "none"
             el.classList.remove("selected")
-            price = 0
+            // price = 0
+            action = "remove"
         }else{
             toppingIcon.style.opacity = "0.5"
             checkIcon.style.display = "block"
             el.classList.add("selected")
-            price = x.price
+            // price = x.price
+            action = "add"
         }
 
-        changeTopping(x.idTopping, price)
+        changeTopping(x.idTopping, price, action)
     }
 
     const sectionTopping = topping.map((v, key) =>
@@ -70,6 +68,46 @@ const SectionTopping = (props) => {
                     position:"absolute", display:"none"}}  />
         </div>
     )
+
+    const priceDetail = ()=>{
+        let priceDetail = []
+
+        priceDetail.push(
+            <span style={{fontSize:"30px"}} key="price">
+                <b>Mie : Rp {dataOrder.price}</b><br/>
+            </span>
+        )
+
+        if("spiceLevelPrice" in dataOrder && dataOrder.spiceLevelPrice !== 0){
+            priceDetail.push(
+                <span style={{fontSize:"30px"}} key="spice price">
+                    <b>Ext Pedas : Rp {dataOrder.spiceLevelPrice}</b><br/>
+                </span>
+            )
+        }
+
+        if("toppingPrice" in dataOrder && dataOrder.toppingPrice !== 0){
+            priceDetail.push(
+                <span style={{fontSize:"30px"}} key="topping price">
+                    <b>Ext Topping : Rp {dataOrder.toppingPrice}</b><br/>
+                </span>
+            )
+        }
+
+        priceDetail.push(
+            <span style={{fontSize:"30px"}} key="total price">
+                <b>Total Harga : Rp {(dataOrder.price !== "")? dataOrder.price : "-"}</b><br/>
+            </span>
+            
+        )
+
+        return priceDetail
+    }
+    const extToppingPrice = ()=>{
+        if("toppingPrice" in dataOrder && dataOrder.toppingPrice !== 0){
+            return <b>Ext Topping : Rp {dataOrder.toppingPrice}</b>
+        }
+    }
 
     return(
         <div id="menuStep3_2" className="menuStep3" style={{display:"none"}}>
@@ -95,8 +133,12 @@ const SectionTopping = (props) => {
                     <h3><b>Topping</b></h3>
                     {sectionTopping}
                 </div>
-                <div className="col-md-12 mt-3 text-center" id="section-price" style={{borderTop:"3px solid"}}>
-                    <span style={{fontSize:"35px"}}><b>Total Harga : Rp {dataOrder.price}</b></span>
+                <div className="col-md-12 mt-3" id="section-price" style={{borderTop:"3px solid"}}>
+                    
+                    {priceDetail()}
+                    {/* <span style={{fontSize:"30px"}}>{extSpicePrice()}</span><br/>
+                    <span style={{fontSize:"30px"}}>{extToppingPrice()}</span><br/> */}
+                    
                 </div>
                 {/* <div className="col-md-12 mt-3 text-center">
                     <button className="btn btn-success" onClick={()=>props.clickOrder("mie")}>ORDER</button>
