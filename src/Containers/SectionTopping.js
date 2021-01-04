@@ -96,7 +96,7 @@ const SectionTopping = (props) => {
 
         priceDetail.push(
             <span style={{fontSize:"30px"}} key="total price">
-                <b>Total Harga : Rp {(dataOrder.price !== "")? dataOrder.price : "-"}</b><br/>
+                <b>Total Harga : Rp {(dataOrder.amount === undefined )? dataOrder.price : dataOrder.amount}</b><br/>
             </span>
             
         )

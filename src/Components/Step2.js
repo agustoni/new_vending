@@ -202,10 +202,23 @@ export class Step2 extends Component {
 
     calc = () => {
         let dataOrder = this.state.dataOrder
-        console.log(dataOrder)
+        let amount = 0 
+        let qty = 0
+        if(dataOrder.qty === undefined){
+            qty = 1
+        }else{
+            qty = dataOrder.qty
+        }
+        amount = (Number(dataOrder.price) + Number(dataOrder.spiceLevelPrice)) * Number(qty)
+        dataOrder["amount"] = amount
+        this.setState({
+            ...this.state,
+            dataOrder
+        })
     }
 
     payment = ()=>{
+        console.log(this.state.dataOrder)
         var target = document.getElementById('menuStep4')
         
         target.style.width = "100%";
@@ -244,7 +257,7 @@ export class Step2 extends Component {
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
-                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"800pxz"}}>
+                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"1130px", overflowY:"scroll"}}>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
                                 <SectionTopping close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={()=>this.payment()}/>
