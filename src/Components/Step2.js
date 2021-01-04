@@ -235,6 +235,8 @@ export class Step2 extends Component {
     calc = () => {
         console.log('a')
         let dataOrder = this.state.dataOrder
+        let topping = null
+        let toppingPrice = 0
         let spiceLevel = 0
         let spiceLevelPrice = 0
         let amount = 0 
@@ -246,6 +248,20 @@ export class Step2 extends Component {
             qty = dataOrder.qty
         }
 
+        //topping
+        if(dataOrder.topping === undefined){
+            topping = null
+        }else{
+            topping = dataOrder.topping
+        }
+
+        if(dataOrder.toppingPrice === undefined){
+            toppingPrice = 0
+        }else{
+            toppingPrice = dataOrder.toppingPrice
+        }
+        
+        //spice
         if(dataOrder.spiceLevelPrice === undefined){
             spiceLevelPrice = 0
         }else{
@@ -258,12 +274,14 @@ export class Step2 extends Component {
             spiceLevelPrice = dataOrder.spiceLevelPrice
         }
 
-        amount = (Number(dataOrder.price) + Number(spiceLevelPrice)) * Number(qty)
+        amount = (Number(dataOrder.price) + Number(spiceLevelPrice) + Number(toppingPrice)) * Number(qty)
 
         dataOrder["amount"] = amount
         dataOrder["qty"] = qty
         dataOrder["spiceLevelPrice"] = spiceLevelPrice
         dataOrder["spiceLevel"] = spiceLevel
+        dataOrder["topping"] = topping
+        dataOrder["toppingPrice"] = toppingPrice
         this.setState({
             ...this.state,
             dataOrder
