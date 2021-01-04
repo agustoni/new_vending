@@ -34,7 +34,7 @@ export class Step2 extends Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot){
-        if(this.state.dataOrder != prevState.dataOrder){
+        if(this.state.dataOrder !== prevState.dataOrder){
             console.log(this.state)
         }
     }
@@ -136,11 +136,15 @@ export class Step2 extends Component {
             boolSelectProductItem : false,
         }, () => {
             let spiceLevel = document.getElementsByClassName("spicelevel");
+            let iconSpice = document.getElementById("sectionSpiceLevel").getElementsByTagName('img')
+
             for(var i=0;i<spiceLevel.length;i++){
                 if(i<level){
                     spiceLevel[i].classList.add("selected-spice")
+                    iconSpice[i].src = `${process.env.PUBLIC_URL}/images/icons/chili-colored.png`
                 }else{
                     spiceLevel[i].classList.remove("selected-spice")
+                    iconSpice[i].src = `${process.env.PUBLIC_URL}/images/icons/chili-empty.png`
                 }
             }
             this.calc()
@@ -202,7 +206,20 @@ export class Step2 extends Component {
 
     calc = () => {
         let dataOrder = this.state.dataOrder
-        console.log(dataOrder)
+
+        let spiceLevelPrice = (typeof(dataOrder['spiceLevelPrice']) !== "undefined" ? dataOrder['spiceLevelPrice'] : 0)
+        let toppingPrice = (typeof(dataOrder['toppingPrice']) !== "undefined" ? dataOrder['toppingPrice'] : 0)
+        let price = (typeof(dataOrder['price']) !== "undefined" ? dataOrder['price'] : 0)
+        let qty = (typeof(dataOrder['qty']) !== "undefined" ? dataOrder['qty'] : 1)
+        
+        dataOrder['totalPrice'] = (Number(price) + Number(spiceLevelPrice) + Number(toppingPrice)) * Number(qty)
+
+        this.setState({
+            ...this.state,
+            dataOrder,
+        }, ()=>{
+            console.log(dataOrder)
+        })
     }
 
     payment = ()=>{
