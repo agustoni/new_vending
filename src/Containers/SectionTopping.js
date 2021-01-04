@@ -117,7 +117,7 @@ const SectionTopping = (props) => {
                     Total
                 </th>
                 <th>
-                    Rp {(dataOrder.price !== "")? dataOrder.totalPrice : "-"}
+                    Rp {(dataOrder.amount === undefined )? dataOrder.price : dataOrder.amount}
                 </th>
             </tr>
         )
