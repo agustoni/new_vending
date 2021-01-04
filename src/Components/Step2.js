@@ -125,6 +125,7 @@ export class Step2 extends Component {
                 price : x.sellingPrice,
                 code: x.code
             },
+            number : '',
             boolSelectProductItem : true,
             activeSelectedProductItem: x.id,
             videoUrl
@@ -229,7 +230,6 @@ export class Step2 extends Component {
     }
 
     calc = () => {
-        console.log('a')
         let dataOrder = this.state.dataOrder
         let spiceLevel = 0
         let spiceLevelPrice = 0
@@ -259,6 +259,9 @@ export class Step2 extends Component {
         dataOrder["amount"] = amount
         dataOrder["qty"] = qty
         dataOrder["spiceLevelPrice"] = spiceLevelPrice
+        dataOrder["spiceLevel"] = spiceLevel
+        dataOrder["customer_id"] = this.state.number
+
         this.setState({
             ...this.state,
             dataOrder
@@ -276,8 +279,6 @@ export class Step2 extends Component {
             target.style.border = "3px solid #dfdfdf";
         });
     }
-
-
 
     cancelOrder = ()=>{
         window.location.reload()
@@ -315,11 +316,11 @@ export class Step2 extends Component {
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
-                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"1130px", overflowY:"scroll"}}>
+                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"920px", overflowY:"scroll"}}>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
                                 <SectionTopping close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={()=>this.payment()}/>
-                                <Numpad clickOrder={()=>this.payment()} close={(action)=>this.closeStep3(action)} numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
+                                <Numpad clickOrder={()=>this.payment()} close={(action)=>this.closeStep3(action)} numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)} dataOrder={this.state.dataOrder}></Numpad>
                             </div>
                             {/* <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}
                             onClick={()=>this.clickHandlerProduct({action:"close"})}>
@@ -334,8 +335,8 @@ export class Step2 extends Component {
                         </div>
                         {listDataProduct}
                     </Col>
-                    <Col md="6" lg="6" className="p-0" style={{height: '1130px', overflowY: 'auto'}}>
-                        <div id="menuStep4" className="m-2 row" style={{height:"1130px"}}>
+                    <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
+                        <div id="menuStep4" className="m-2 row" style={{height:"920px"}}>
                             <Payment qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()}/>
                         </div>
                         <Row className="mx-auto row">
