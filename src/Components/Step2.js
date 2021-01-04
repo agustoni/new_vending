@@ -25,6 +25,7 @@ export class Step2 extends Component {
             number : '',
             boolSelectProductItem : false,
             activeSelectedProductItem : null,
+            videoUrl : 'indomie_default.mp4'
         }
     }
 
@@ -88,10 +89,6 @@ export class Step2 extends Component {
         var target = document.getElementById('menuStep3')
         var prdName = document.getElementById('productName')
 
-        
-        // test.classList.remove("style")
-// console.log()
-
         this.setState({
             ...this.state,
             dataOrder :{
@@ -101,13 +98,14 @@ export class Step2 extends Component {
                 code: x.code
             },
             boolSelectProductItem : true,
-            activeSelectedProductItem: x.id
+            activeSelectedProductItem: x.id,
+            videoUrl : x.videoUrl
         })
 
         if(x.action === "open"){
             target.style.width = "98%";
             target.style.border = "3px solid #dfdfdf";
-            prdName.innerHTML = x.bodytext
+            prdName.innerHTML = x.title
         }else{
             target.style.width = "0px";
             target.style.border = "0px";
@@ -238,14 +236,14 @@ export class Step2 extends Component {
                     )
         
         let listDataProductItems = this.state.productItems.map((v, key) => 
-            <ListProductItem activeSelectedProductItem={this.state.activeSelectedProductItem} click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.name} bodytext={v.text} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code}></ListProductItem>
+            <ListProductItem activeSelectedProductItem={this.state.activeSelectedProductItem} click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.name} bodytext={v.text} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code} videoUrl={v.video}></ListProductItem>
         )
 
         return (
             <div>
-                <BannerVideo videoUrl="indomie_default.mp4"></BannerVideo>
+                <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Row className="m-auto">
-                    <Col md="6" lg="6" className="p-0">
+                    <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"800pxz"}}>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
@@ -265,7 +263,7 @@ export class Step2 extends Component {
                         </div>
                         {listDataProduct}
                     </Col>
-                    <Col md="6" lg="6" className="p-0">
+                    <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
                         <div id="menuStep4" className="m-2 row" style={{height:"800px"}}>
                             <Payment qrVal="" cancelOrder={()=>this.cancelOrder()}/>
                         </div>

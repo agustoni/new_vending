@@ -5,10 +5,10 @@ import {
 } from 'reactstrap';
 
 const ListProductItem = (props) => {
-    let {grid, image, title, bodytext, backgroundColor, textColor, sellingPrice, idCategory, id, code, activeSelectedProductItem} = props;
+    let {grid, image, title, bodytext, backgroundColor, textColor, sellingPrice, idCategory, id, code, activeSelectedProductItem, videoUrl} = props;
     let dataPrdItem = {
         action: "open",
-        id, idCategory, sellingPrice, bodytext, code
+        id, idCategory, sellingPrice, bodytext, code, videoUrl, title
     }
     let selectedBackground = ''
     if(id === activeSelectedProductItem){
