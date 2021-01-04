@@ -10,7 +10,8 @@ var QRCode = require('qrcode.react');
 const Payment = (props)=>{
     return(
         <div>
-            <QRCode size={300} level="H" value={props.qrVal} />
+            <h3 className="text-dark text-center">SCAN DISINI</h3>
+            <QRCode size={300} level="Q" value={props.qrVal} />
             <Row>
                 <div className="col-md-12 text-center mt-5">
                     <button className="btn btn-danger col-md-12" onClick={()=>props.cancelOrder()}>Cancel</button>

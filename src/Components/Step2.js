@@ -25,7 +25,9 @@ export class Step2 extends Component {
             number : '',
             boolSelectProductItem : false,
             activeSelectedProductItem : null,
-            videoUrl : 'indomie_default.mp4'
+            activeSelectedProduct : null,
+            videoUrl : 'indomie_default.mp4',
+            qrVal : ''
         }
     }
 
@@ -49,7 +51,9 @@ export class Step2 extends Component {
         })
         .then(res => {
             this.setState({
-                productItems :res.data
+                ...this.state,
+                productItems :res.data,
+                activeSelectedProduct : idProduct
             }, ()=>{
                 console.log(this.state.productItems)
             })
@@ -58,6 +62,25 @@ export class Step2 extends Component {
 
         });
         
+    }
+
+    getQrCode(){
+        return axios.get('http://localhost/api/vending_machine/qris.php', {
+            params:{
+                amount: this.state.dataOrder.amount
+            }
+        }).then(response => {
+            let dataOrder = this.state.dataOrder
+            dataOrder['trxNo'] = response.data.data.transactionNo
+            dataOrder['reffNo'] = response.data.data.referenceNo
+            this.setState({
+                ...this.state,
+                dataOrder,
+                qrVal: response.data.data.qrisData
+            }, ()=>{
+                console.log(this.state)
+            })
+        })
     }
 
 
@@ -88,6 +111,11 @@ export class Step2 extends Component {
     clickHandlerProduct = (x)=>{
         var target = document.getElementById('menuStep3')
         var prdName = document.getElementById('productName')
+        let videoUrl = 'indomie_default.mp4'
+
+        if(x.videoUrl){
+            videoUrl = x.videoUrl
+        }
 
         this.setState({
             ...this.state,
@@ -99,7 +127,7 @@ export class Step2 extends Component {
             },
             boolSelectProductItem : true,
             activeSelectedProductItem: x.id,
-            videoUrl : x.videoUrl
+            videoUrl
         })
 
         if(x.action === "open"){
@@ -201,16 +229,36 @@ export class Step2 extends Component {
     }
 
     calc = () => {
+        console.log('a')
         let dataOrder = this.state.dataOrder
+        let spiceLevel = 0
+        let spiceLevelPrice = 0
         let amount = 0 
         let qty = 0
+
         if(dataOrder.qty === undefined){
             qty = 1
         }else{
             qty = dataOrder.qty
         }
-        amount = (Number(dataOrder.price) + Number(dataOrder.spiceLevelPrice)) * Number(qty)
+
+        if(dataOrder.spiceLevelPrice === undefined){
+            spiceLevelPrice = 0
+        }else{
+            spiceLevelPrice = dataOrder.spiceLevelPrice
+        }
+
+        if(dataOrder.spiceLevelPrice === undefined){
+            spiceLevelPrice = 0
+        }else{
+            spiceLevelPrice = dataOrder.spiceLevelPrice
+        }
+
+        amount = (Number(dataOrder.price) + Number(spiceLevelPrice)) * Number(qty)
+
         dataOrder["amount"] = amount
+        dataOrder["qty"] = qty
+        dataOrder["spiceLevelPrice"] = spiceLevelPrice
         this.setState({
             ...this.state,
             dataOrder
@@ -218,12 +266,18 @@ export class Step2 extends Component {
     }
 
     payment = ()=>{
-        console.log(this.state.dataOrder)
-        var target = document.getElementById('menuStep4')
-        
-        target.style.width = "100%";
-        target.style.border = "3px solid #dfdfdf";
+        this.calc()
+        Promise.all([this.calc(), this.getQrCode()])
+        .then(function (results) {
+            
+            var target = document.getElementById('menuStep4')
+            
+            target.style.width = "100%";
+            target.style.border = "3px solid #dfdfdf";
+        });
     }
+
+
 
     cancelOrder = ()=>{
         window.location.reload()
@@ -238,13 +292,17 @@ export class Step2 extends Component {
         
         target2.style.width = "0px";
         target2.style.border = "0px";
+        this.setState({
+            ...this.state,
+            activeSelectedProductItem: null,
+        })
     }
 
     render() {
         let {product, spiceLevel, topping, selectedProductHome} = this.props
         let listDataProduct = product.map((v, key) =>
                                 <Row className="m-2"key={key}>
-                                    <ListProduct click={()=>this.getDataProductItem(v.id)} image={v.image} backgroundColor={v.color} title={v.product} bodytext={v.text} textColor={v.text_color} idCategory={v.id_category}></ListProduct>
+                                    <ListProduct activeSelectedProduct = {this.state.activeSelectedProduct} click={()=>this.getDataProductItem(v.id)} image={v.image} backgroundColor={v.color} title={v.product} bodytext={v.text} textColor={v.text_color} idCategory={v.id_category} id={v.id}></ListProduct>
                                 </Row>
                     )
         
@@ -276,9 +334,9 @@ export class Step2 extends Component {
                         </div>
                         {listDataProduct}
                     </Col>
-                    <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
-                        <div id="menuStep4" className="m-2 row" style={{height:"800px"}}>
-                            <Payment qrVal="" cancelOrder={()=>this.cancelOrder()}/>
+                    <Col md="6" lg="6" className="p-0" style={{height: '1130px', overflowY: 'auto'}}>
+                        <div id="menuStep4" className="m-2 row" style={{height:"1130px"}}>
+                            <Payment qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()}/>
                         </div>
                         <Row className="mx-auto row">
                         {listDataProductItems}
