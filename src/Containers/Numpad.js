@@ -23,6 +23,11 @@ const Numpad = (props) => {
                     </div>
                 </div>
             </div>
+            <div className="row">
+                <div className="col-md-12 mt-3 text-center" >
+                    <button className="btn btn-primary col-md-12" onClick={()=>props.close({action:"close"})} style={{fontSize: "35px", fontWeight: "600"}}>BACK</button>
+                </div>
+            </div>
         </div>
     )
 }
@@ -41,7 +46,7 @@ const createBtn = (x)=>{
             )
         }else if(num === "ok"){
             return (
-                <div className="col-4 mx-auto my-2" key={key}>
+                <div className="col-4 mx-auto my-2" key={key} onClick={()=>x.clickOrder()}>
                     <div className="num d-flex justify-content-center align-items-center rounded-circle" onClick={()=>x.click(num)}>
                         <FontAwesomeIcon icon={faCheck} size="3x" />
                     </div>

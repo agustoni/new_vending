@@ -238,7 +238,7 @@ export class Step2 extends Component {
                     )
         
         let listDataProductItems = this.state.productItems.map((v, key) => 
-            <ListProductItem activeSelectedProductItem={this.state.activeSelectedProductItem} click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.title} bodytext={v.name} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code}></ListProductItem>
+            <ListProductItem activeSelectedProductItem={this.state.activeSelectedProductItem} click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.name} bodytext={v.text} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code}></ListProductItem>
         )
 
         return (
@@ -250,7 +250,7 @@ export class Step2 extends Component {
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
                                 <SectionTopping close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={()=>this.payment()}/>
-                                <Numpad numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
+                                <Numpad clickOrder={()=>this.payment()} close={(action)=>this.closeStep3(action)} numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)}></Numpad>
                             </div>
                             {/* <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}
                             onClick={()=>this.clickHandlerProduct({action:"close"})}>
@@ -266,7 +266,7 @@ export class Step2 extends Component {
                         {listDataProduct}
                     </Col>
                     <Col md="6" lg="6" className="p-0">
-                        <div id="menuStep4" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "3px solid", height:"800pxz"}}>
+                        <div id="menuStep4" className="m-2 row" style={{height:"800px"}}>
                             <Payment qrVal="" cancelOrder={()=>this.cancelOrder()}/>
                         </div>
                         <Row className="mx-auto row">
