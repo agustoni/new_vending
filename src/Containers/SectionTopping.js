@@ -28,7 +28,9 @@ const SectionTopping = (props) => {
     }
 
     let sectionSpiceLevel = spiceLevel.map((v, key) => 
-        <div className="spicelevel" key={key} id={v.name} onClick={()=>changeSpiceLevel(v.level, v.price)}></div>                
+        <div className="spicelevel" key={key} id={v.name} onClick={()=>changeSpiceLevel(v.level, v.price)} style={{float:"left"}}>
+            <img src={`${process.env.PUBLIC_URL}/images/icons/chili-empty.png`} alt={"chili-"+key} style={{width:"60px"}}/>
+        </div>                
     )
 
     const selectTopping = (x)=>{
@@ -73,40 +75,54 @@ const SectionTopping = (props) => {
         let priceDetail = []
 
         priceDetail.push(
-            <span style={{fontSize:"30px"}} key="price">
-                <b>Mie : Rp {dataOrder.price}</b><br/>
-            </span>
+            <tr key="productPrice">
+                <td>
+                    Mie
+                </td>
+                <td>
+                    Rp {dataOrder.price}
+                </td>
+            </tr>
         )
 
-        if("spiceLevelPrice" in dataOrder && dataOrder.spiceLevelPrice !== 0){
+        if("spiceLevelPrice" in dataOrder && dataOrder.spiceLevelPrice !== 0 && dataOrder.spiceLevelPrice !== "0"){
             priceDetail.push(
-                <span style={{fontSize:"30px"}} key="spice price">
-                    <b>Ext Pedas : Rp {dataOrder.spiceLevelPrice}</b><br/>
-                </span>
+                <tr key="spiceLevelPrice">
+                    <td>
+                        Ext Pedas
+                    </td>
+                    <td>
+                        Rp {dataOrder.spiceLevelPrice}
+                    </td>
+                </tr>
             )
         }
 
         if("toppingPrice" in dataOrder && dataOrder.toppingPrice !== 0){
             priceDetail.push(
-                <span style={{fontSize:"30px"}} key="topping price">
-                    <b>Ext Topping : Rp {dataOrder.toppingPrice}</b><br/>
-                </span>
+                <tr key="toppingPrice">
+                    <td>
+                        Ext Topping
+                    </td>
+                    <td>
+                        Rp {dataOrder.toppingPrice}
+                    </td>
+                </tr>
             )
         }
 
         priceDetail.push(
-            <span style={{fontSize:"30px"}} key="total price">
-                <b>Total Harga : Rp {(dataOrder.amount === undefined )? dataOrder.price : dataOrder.amount}</b><br/>
-            </span>
-            
+            <tr key="totalPrice">
+                <th>
+                    Total
+                </th>
+                <th>
+                    Rp {(dataOrder.amount === undefined )? dataOrder.price : dataOrder.amount}
+                </th>
+            </tr>
         )
 
         return priceDetail
-    }
-    const extToppingPrice = ()=>{
-        if("toppingPrice" in dataOrder && dataOrder.toppingPrice !== 0){
-            return <b>Ext Topping : Rp {dataOrder.toppingPrice}</b>
-        }
     }
 
     return(
@@ -114,13 +130,13 @@ const SectionTopping = (props) => {
             <Row>
                 <div className="col-md-12" id="section-spice">
                     <h3><b>Level Pedas</b></h3>
-                    <div className="bar-wrapper">
+                    <div className="" id="sectionSpiceLevel">
                         {sectionSpiceLevel}
                     </div>
                     <FontAwesomeIcon 
                         icon={faTimesCircle} 
                         size="3x" 
-                        style={{color:"#cc2525", cursor:"pointer", marginTop:"30px", marginLeft:"15px"}} 
+                        style={{color:"#cc2525", cursor:"pointer", marginTop:"15px", marginLeft:"25px"}} 
                         onClick={()=>changeSpiceLevel(0, 0)} />
                 </div>
                 <div className="col-md-12 mt-3" id="section-qty">
@@ -134,7 +150,11 @@ const SectionTopping = (props) => {
                     {sectionTopping}
                 </div>
                 <div className="col-md-12 mt-3" id="section-price" style={{borderTop:"3px solid #dfdfdf"}}>
-                    {priceDetail()}
+                    <table className="table table-borderless table-sm" style={{fontSize: "30px", fontFamily: "arial"}}>
+                        <tbody>
+                        {priceDetail()}
+                        </tbody>
+                    </table>
                 </div>
             </Row>
             <Row>

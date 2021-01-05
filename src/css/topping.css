@@ -1,6 +1,6 @@
-.selected-spice{
+/* .selected-spice{
 	background: #800000;
-}
+} */
 .selected-qty{
     background: #11c9e7!important;
 }
@@ -15,11 +15,11 @@
     border: 3px solid #fbff00;
     position: relative;
 }
-.spicelevel {
+/* .spicelevel {
     height: 90%;
     width: 17%;
     float: left;
     margin: 4px;
     border: 3px solid #ff0000;
     cursor: pointer;
-}
+} */
