@@ -12,6 +12,11 @@ const Payment = (props)=>{
     return(
         <div>
             <h3 className="text-dark text-center">SCAN DISINI</h3>
+            <Row>
+                <div className="col-md-12 text-center mt-5">
+                    <button className="btn btn-success col-md-12" onClick={()=>props.bypass()}>Bypass</button>
+                </div>
+            </Row>
             <QRCode size={300} level="Q" value={props.qrVal} />
             <Row>
                 <div className="col-md-12 text-center mt-5">

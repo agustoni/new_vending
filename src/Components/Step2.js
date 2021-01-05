@@ -8,6 +8,7 @@ import axios from 'axios'
 import BackNavigation from '../Containers/BackNavigation'
 import BannerVideo from '../Containers/BannerVideo'
 import Payment from '../Containers/Payment'
+import Finish from '../Containers/Finish'
 
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -28,7 +29,8 @@ export class Step2 extends Component {
             activeSelectedProduct : null,
             videoUrl : 'indomie_default.mp4',
             qrVal : '', 
-            cekPaymentInterval: false
+            cekPaymentInterval: false,
+            finish: false
         }
     }
 
@@ -41,14 +43,71 @@ export class Step2 extends Component {
             console.log(this.state)
         }
 
-        // if(){
-            // asdadsad
-        // }
+        if(this.state.cekPaymentInterval !== prevState.cekPaymentInterval){
+            if(this.state.cekPaymentInterval){
+                console.log("interval on")
+                this.cekPayment()
+            }else{
+                console.log("interval off")
+                clearInterval(this.interval)
+            }
+        }
+    }
+
+    bypass = () =>{
+        axios.get('http://localhost/api/vending_machine/bypass.php', {
+            params: {
+                trxNo: this.state.dataOrder.trxNo
+            }
+        })
+        .then(res => {
+            console.log("bypass. . .")
+            
+        })
+        .catch(function (error) {
+
+        });
+    }
+
+    cekPayment = ()=>{
+        let dataOrder = this.state.dataOrder
+        
+        this.interval = setInterval(()=>{ 
+                axios.get('http://localhost/api/vending_machine/cekpayment.php', {
+                    params: {
+                        dataOrder
+                    }
+                })
+                .then(res => {
+                    console.log("sad")
+                    console.log(res.data)
+
+                    if(res.data.pymstt === "PAID"){
+                        console.log("SUDAH LUNAS")
+                        console.log(this.state.dataOrder)
+                        this.setState({
+                            ...this.state,
+                            cekPaymentInterval : false,
+                            finish: true
+                        }, ()=>{
+                            console.log("FINISH ORDER. . . !!!!")
+                            setTimeout(function() {
+                                window.location.reload()
+                              }, 3000);
+                        })
+                    }
+                })
+                .catch(function (error) {
+                   
+                });
+                
+            },
+            
+        5000)
     }
 
     // AXIOS GET DATA PRODUCT ITEMS USING HTTP REQUEST METHOD
     getDataProductItem(idProduct) {
-        console.log(idProduct)
         axios.get('http://localhost/api/vending_machine/productdetail.php', {
             params: {
               idproduct: idProduct
@@ -60,7 +119,7 @@ export class Step2 extends Component {
                 productItems :res.data,
                 activeSelectedProduct : idProduct
             }, ()=>{
-                console.log(this.state.productItems)
+                // console.log(this.state.productItems)
             })
         })
         .catch(function (error) {
@@ -81,8 +140,10 @@ export class Step2 extends Component {
             this.setState({
                 ...this.state,
                 dataOrder,
+                cekPaymentInterval: true,
                 qrVal: response.data.data.qrisData
             }, ()=>{
+                console.log("qris")
                 console.log(this.state)
             })
         })
@@ -265,10 +326,10 @@ export class Step2 extends Component {
         }
         
         //spice
-        if(dataOrder.spiceLevelPrice === undefined){
-            spiceLevelPrice = 0
+        if(dataOrder.spiceLevel === undefined){
+            spiceLevel = 0
         }else{
-            spiceLevelPrice = dataOrder.spiceLevelPrice
+            spiceLevel = dataOrder.spiceLevel
         }
 
         if(dataOrder.spiceLevelPrice === undefined){
@@ -288,6 +349,9 @@ export class Step2 extends Component {
         this.setState({
             ...this.state,
             dataOrder
+        }, ()=>{
+            console.log("data order")
+            console.log(this.state.dataOrder)
         })
     }
 
@@ -324,13 +388,6 @@ export class Step2 extends Component {
         })
     }
 
-    handlerCekPayment = ()=>{
-        this.setState({
-            ...this.state,
-            cekPaymentInterval: true
-        })
-    }
-
     render() {
         let {product, spiceLevel, topping, selectedProductHome} = this.props
         let listDataProduct = product.map((v, key) =>
@@ -345,8 +402,8 @@ export class Step2 extends Component {
 
         return (
             <div>
-                <button className="btn btn-primary" onClick={()=>this.handlerCekPayment()}>Interval</button>
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
+                <Finish finish={this.state.finish} />
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"1130px", overflowY:"scroll"}}>
@@ -370,7 +427,7 @@ export class Step2 extends Component {
                     </Col>
                     <Col md="6" lg="6" className="p-0" style={{height: '1130px', overflowY: 'auto'}}>
                         <div id="menuStep4" className="m-2 row" style={{height:"1130px"}}>
-                            <Payment intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()}/>
+                            <Payment intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()} bypass={()=>this.bypass()}/>
                         </div>
                         <Row className="mx-auto row">
                         {listDataProductItems}
