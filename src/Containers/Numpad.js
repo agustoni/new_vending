@@ -49,8 +49,8 @@ const createBtn = (x)=>{
             )
         }else if(num === "ok"){
             return (
-                <div className="col-4 mx-auto my-2" key={key} onClick={()=>x.clickOrder()}>
-                    <div className="num d-flex justify-content-center align-items-center rounded-circle" onClick={()=>x.click(num)}>
+                <div className="col-4 mx-auto my-2 doneppob" key={key} onClick={()=>x.clickOrder('ppob')} disabled={x.disableButton}>
+                    <div className="num d-flex justify-content-center align-items-center rounded-circle bg-success text-white" onClick={()=>x.click(num)}>
                         <FontAwesomeIcon icon={faCheck} size="3x" />
                     </div>
                 </div>

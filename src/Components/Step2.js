@@ -28,7 +28,8 @@ export class Step2 extends Component {
             activeSelectedProduct : null,
             videoUrl : 'indomie_default.mp4',
             qrVal : '', 
-            cekPaymentInterval: false
+            cekPaymentInterval: false,
+            boolDisableButton: false
         }
     }
 
@@ -40,6 +41,13 @@ export class Step2 extends Component {
         if(this.state.dataOrder !== prevState.dataOrder){
             console.log(this.state)
         }
+
+        // if(prevState.qrVal === '' && this.state.qrVal !== ''){
+        //     this.setState({
+        //         ...this.state,
+        //         boolDisableButton: true
+        //     })
+        // }
 
         // if(){
             // asdadsad
@@ -70,6 +78,10 @@ export class Step2 extends Component {
     }
 
     getQrCode(){
+        this.setState({
+            ...this.state,
+            boolDisableButton: true
+        })
         return axios.get('http://localhost/api/vending_machine/qris.php', {
             params:{
                 amount: this.state.dataOrder.amount
@@ -294,7 +306,12 @@ export class Step2 extends Component {
         })
     }
 
-    payment = ()=>{
+    payment = (type)=>{
+        if(type === 'ppob'){
+            if(this.state.number === ''){
+                return alert('Anda belum memasukan nomor')
+            }
+        }
         this.calc()
         Promise.all([this.calc(), this.getQrCode()])
         .then(function (results) {
@@ -315,6 +332,7 @@ export class Step2 extends Component {
             ...this.state,
             dataOrder: {},
             boolSelectProductItem : true,
+            boolDisableButton : false,
         }, ()=>{
             //close topping/numpad
             var target1 = document.getElementById('menuStep3')
@@ -355,8 +373,8 @@ export class Step2 extends Component {
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"920px", overflowY:"scroll"}}>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
-                                <SectionTopping close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={()=>this.payment()}/>
-                                <Numpad clickOrder={()=>this.payment()} close={(action)=>this.closeStep3(action)} numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)} dataOrder={this.state.dataOrder}></Numpad>
+                                <SectionTopping disableButton={this.state.boolDisableButton} close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={(type)=>this.payment(type)}/>
+                                <Numpad disableButton={this.state.boolDisableButton} clickOrder={(type)=>this.payment(type)} close={(action)=>this.closeStep3(action)} numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)} dataOrder={this.state.dataOrder}></Numpad>
                             </div>
                             {/* <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}
                             onClick={()=>this.clickHandlerProduct({action:"close"})}>
