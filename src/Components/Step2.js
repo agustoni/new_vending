@@ -27,7 +27,8 @@ export class Step2 extends Component {
             activeSelectedProductItem : null,
             activeSelectedProduct : null,
             videoUrl : 'indomie_default.mp4',
-            qrVal : ''
+            qrVal : '', 
+            cekPaymentInterval: false
         }
     }
 
@@ -39,6 +40,10 @@ export class Step2 extends Component {
         if(this.state.dataOrder !== prevState.dataOrder){
             console.log(this.state)
         }
+
+        // if(){
+            // asdadsad
+        // }
     }
 
     // AXIOS GET DATA PRODUCT ITEMS USING HTTP REQUEST METHOD
@@ -82,7 +87,6 @@ export class Step2 extends Component {
             })
         })
     }
-
 
     //NUMPAD
     clickHandlerNumpad = (num)=>{
@@ -233,7 +237,6 @@ export class Step2 extends Component {
     }
 
     calc = () => {
-        console.log('a')
         let dataOrder = this.state.dataOrder
         let topping = null
         let toppingPrice = 0
@@ -300,24 +303,31 @@ export class Step2 extends Component {
         });
     }
 
-
-
     cancelOrder = ()=>{
         window.location.reload()
     }
 
     closeStep3 = ()=>{
-        var target1 = document.getElementById('menuStep3')
-        target1.style.width = "0px";
-        target1.style.border = "0px";
-
-        var target2 = document.getElementById('menuStep4')
-        
-        target2.style.width = "0px";
-        target2.style.border = "0px";
         this.setState({
             ...this.state,
-            activeSelectedProductItem: null,
+            dataOrder: {},
+            boolSelectProductItem : true,
+        }, ()=>{
+            //close topping/numpad
+            var target1 = document.getElementById('menuStep3')
+            target1.style.width = "0px";
+            target1.style.border = "0px";
+
+            var target2 = document.getElementById('menuStep4')
+            target2.style.width = "0px";
+            target2.style.border = "0px";
+        })
+    }
+
+    handlerCekPayment = ()=>{
+        this.setState({
+            ...this.state,
+            cekPaymentInterval: true
         })
     }
 
@@ -335,6 +345,7 @@ export class Step2 extends Component {
 
         return (
             <div>
+                <button className="btn btn-primary" onClick={()=>this.handlerCekPayment()}>Interval</button>
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
@@ -359,7 +370,7 @@ export class Step2 extends Component {
                     </Col>
                     <Col md="6" lg="6" className="p-0" style={{height: '1130px', overflowY: 'auto'}}>
                         <div id="menuStep4" className="m-2 row" style={{height:"1130px"}}>
-                            <Payment qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()}/>
+                            <Payment intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()}/>
                         </div>
                         <Row className="mx-auto row">
                         {listDataProductItems}

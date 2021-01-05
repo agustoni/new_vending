@@ -171,13 +171,10 @@ const SectionTopping = (props) => {
 
 const reset = () => {
     let spiceLevel = document.getElementsByClassName("spicelevel");
-    let selectedLevel = document.getElementsByClassName("selected-spice");
+    
     for(var i=0;i<spiceLevel.length;i++){
-        if(i<selectedLevel){
-            spiceLevel[i].classList.add("selected-spice")
-        }else{
-            spiceLevel[i].classList.remove("selected-spice")
-        }
+        spiceLevel[i].querySelector("img").src = `${process.env.PUBLIC_URL}/images/icons/chili-empty.png`
+        spiceLevel[i].classList.remove("selected-spice")
     }
 
     let qty = document.getElementsByClassName("qty")
@@ -188,6 +185,13 @@ const reset = () => {
         }else{
             qty[i].classList.remove("selected-qty")
         }
+    }
+
+    let toppingItem = document.querySelectorAll("#section-topping > div");
+    for(var i = 0; i < toppingItem.length; i++) {
+        toppingItem[i].getElementsByTagName('img')[0].style.opacity = "0.5"
+        toppingItem[i].getElementsByTagName('svg')[0].style.display = "none"
+        toppingItem[i].classList.remove("selected")
     }
 }
 
