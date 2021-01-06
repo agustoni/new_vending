@@ -18,7 +18,7 @@ const SectionTopping = (props) => {
     
         qtyPad.push(
             <div className="qty-pad" key={i}>
-                <div className="num d-flex justify-content-center qty align-items-center" id={"qty_"+i} onClick={()=>changeQty(qty)}>
+                <div className={Number(qty) == 1 ? `num d-flex justify-content-center qty align-items-center selected-qty`:`num d-flex justify-content-center qty align-items-center `} id={"qty_"+i} onClick={()=>changeQty(qty)}>
                     <div className="txt btn-number">
                         {i}
                     </div>
@@ -128,6 +128,10 @@ const SectionTopping = (props) => {
     return(
         <div id="menuStep3_2" className="menuStep3" style={{display:"none"}}>
             <Row>
+                <div className="col-md-12 mt-3" id="section-qty">
+                    <h3><b>Jumlah</b></h3>
+                    {qtyPad}
+                </div>
                 <div className="col-md-12" id="section-spice">
                     <h3><b>Level Pedas</b></h3>
                     <div className="" id="sectionSpiceLevel">
@@ -139,10 +143,7 @@ const SectionTopping = (props) => {
                         style={{color:"#cc2525", cursor:"pointer", marginTop:"15px", marginLeft:"25px"}} 
                         onClick={()=>changeSpiceLevel(0, 0)} />
                 </div>
-                <div className="col-md-12 mt-3" id="section-qty">
-                    <h3><b>Jumlah</b></h3>
-                    {qtyPad}
-                </div>
+                
             </Row>
             <Row>
                 <div className="col-md-12 mt-3" id="section-topping">
@@ -180,7 +181,7 @@ const reset = () => {
     let qty = document.getElementsByClassName("qty")
     let selectedQty = document.getElementsByClassName("selected-qty")
     for(var i=0;i<qty.length;i++){
-        if(i+1 === selectedQty){
+        if(i === 0){
             qty[i].classList.add("selected-qty")
         }else{
             qty[i].classList.remove("selected-qty")
