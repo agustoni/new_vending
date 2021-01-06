@@ -193,7 +193,8 @@ export class Step2 extends Component {
                 idProductDetail : x.id,
                 idProductCategory : x.idCategory,
                 price : x.sellingPrice,
-                code: x.code
+                code: x.code,
+                method: x.method
             },
             number : '',
             boolSelectProductItem : true,
@@ -411,7 +412,7 @@ export class Step2 extends Component {
                     )
         
         let listDataProductItems = this.state.productItems.map((v, key) => 
-            <ListProductItem activeSelectedProductItem={this.state.activeSelectedProductItem} click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.name} bodytext={v.text} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code} videoUrl={v.video}></ListProductItem>
+            <ListProductItem activeSelectedProductItem={this.state.activeSelectedProductItem} click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.name} bodytext={v.text} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code} videoUrl={v.video} method={v.method}></ListProductItem>
         )
 
         return (
