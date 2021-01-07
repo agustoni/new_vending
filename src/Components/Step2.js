@@ -391,6 +391,7 @@ export class Step2 extends Component {
             dataOrder: {},
             boolSelectProductItem : true,
             boolDisableButton : false,
+            activeSelectedProductItem: null,
         }, ()=>{
             //close topping/numpad
             var target1 = document.getElementById('menuStep3')
@@ -420,8 +421,8 @@ export class Step2 extends Component {
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Finish finish={this.state.finish} />
                 <Row className="m-auto">
-                    <Col md="6" lg="6" className="p-0" style={{height: '920px', overflowY: 'auto'}}>
-                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", height:"920px", overflowY:"scroll"}}>
+                    <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
+                        <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", overflowY:"scroll"}}>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
                                 <SectionTopping disableButton={this.state.boolDisableButton} close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={(type)=>this.payment(type)}/>
@@ -440,8 +441,8 @@ export class Step2 extends Component {
                         </div>
                         {listDataProduct}
                     </Col>
-                    <Col md="6" lg="6" className="p-0" style={{height: '1130px', overflowY: 'auto'}}>
-                        <div id="menuStep4" className="m-2 row" style={{height:"1130px"}}>
+                    <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
+                        <div id="menuStep4" className="m-2 row">
                             <Payment intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()} bypass={()=>this.bypass()}/>
                         </div>
                         <Row className="mx-auto row">
