@@ -160,7 +160,7 @@ const SectionTopping = (props) => {
             </Row>
             <Row>
                 <div className="col-md-6 mt-3 text-center" >
-                    <button className="btn btn-primary rounded-circle text-white" onClick={()=>props.close({action:"close"})} style={{width: "150px", height: "150px", fontSize: "35px", fontWeight: "600"}}>BACK</button>
+                    <button className="btn btn-primary rounded-circle text-white" onClick={()=>props.close({action:"close"})} style={{width: "150px", height: "150px", fontSize: "35px", fontWeight: "600"}} disabled={disableButton}>BACK</button>
                 </div>
                 <div className="col-md-6 mt-3 text-center">
                     <button className="btn btn-success rounded-circle" onClick={()=>props.clickOrder("mie")} style={{width: "150px", height: "150px", fontSize: "35px", fontWeight: "600"}} disabled={disableButton}>ORDER</button>
