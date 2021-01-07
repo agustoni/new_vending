@@ -8,12 +8,8 @@ import axios from 'axios'
 import BackNavigation from '../Containers/BackNavigation'
 import BannerVideo from '../Containers/BannerVideo'
 import Payment from '../Containers/Payment'
-import Finish from '../Containers/Finish'
 import IdleTimer from 'react-idle-timer';
-
-
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faAngleDoubleLeft, faArrowAltCircleLeft} from '@fortawesome/free-solid-svg-icons'
+import Masking from '../Containers/Masking'
 import './../css/style.css'
 
 export class Step2 extends Component {
@@ -36,6 +32,7 @@ export class Step2 extends Component {
             timeout:1000 * 30 * 1,
             isTimedOut: false,
             secondsQr : 60,
+            mask: 0,
         }
 
         this.idleTimer = null
@@ -98,7 +95,7 @@ export class Step2 extends Component {
                         this.setState({
                             ...this.state,
                             cekPaymentInterval : false,
-                            finish: true
+                            mask: 2
                         }, ()=>{
                             console.log("FINISH ORDER. . . !!!!")
                             setTimeout(function() {
@@ -249,10 +246,6 @@ export class Step2 extends Component {
         }
     }
 
-    clickHandlerSubmitOrder = (data) => {
-
-    }
-
     changeHandlerSpiceLevel = (level, price) =>{
         let dataOrder = this.state.dataOrder
         dataOrder['spiceLevel'] = level
@@ -264,16 +257,26 @@ export class Step2 extends Component {
         }, () => {
             let spiceLevel = document.getElementsByClassName("spicelevel");
             let iconSpice = document.getElementById("sectionSpiceLevel").getElementsByTagName('img')
-
+            let x = 0
             for(var i=0;i<spiceLevel.length;i++){
                 if(i<level){
                     spiceLevel[i].classList.add("selected-spice")
                     iconSpice[i].src = `${process.env.PUBLIC_URL}/images/icons/chili-colored.png`
+                    x++
                 }else{
                     spiceLevel[i].classList.remove("selected-spice")
                     iconSpice[i].src = `${process.env.PUBLIC_URL}/images/icons/chili-empty.png`
                 }
             }
+
+            // if(x === 0){
+            //     document.getElementById("noChili").style.opacity = "1"
+            //     document.getElementById("sectionSpiceLevel").style.opacity = "0.3"
+            // }else{
+            //     document.getElementById("noChili").style.opacity = "0.3"
+            //     document.getElementById("sectionSpiceLevel").style.opacity = "1"
+            // }
+            
             this.calc()
         })
     }
@@ -398,9 +401,9 @@ export class Step2 extends Component {
             }
         }
         this.calc()
-        Promise.all([this.calc(), this.getQrCode()])
-        .then(function (results) {
-            
+        Promise.all([this.calc(), this.getQrCode(), this.mask()])
+        .then((results) => {
+            this.unmask()
             var target = document.getElementById('menuStep4')
             
             target.style.width = "100%";
@@ -454,6 +457,27 @@ export class Step2 extends Component {
             this.setState({isTimedOut: true})
         }
     }
+
+    mask = ()=>{
+        this.setState({
+            ...this.state,
+            mask : 1
+        }, ()=>{
+            console.log("MASK ON")
+        })
+        setTimeout(() => {  console.log("World!"); }, 2000);
+    }
+
+    unmask = ()=>{
+        this.setState({
+            ...this.state,
+            mask : 0
+        }, ()=>{
+            console.log("MASK OFF")
+        })
+        setTimeout(() => {  console.log("World!"); }, 2000);
+    }
+
     render() {
         let {product, spiceLevel, topping, selectedProductHome} = this.props
         let listDataProduct = product.map((v, key) =>
@@ -470,13 +494,23 @@ export class Step2 extends Component {
             <div>
                 <IdleTimer ref={ref => { this.idleTimer = ref }} element={document} onActive={this.onActive} onIdle={this.onIdle} onAction={this.onAction} debounce={250} timeout={this.state.timeout} />
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
-                <Finish finish={this.state.finish} />
+                <Row>
+                    <Col md="12">
+                        <button onClick={()=>this.mask()} className="btn btn-success btn-lg" style={{zIndex:10}}>
+                            MASK ON
+                        </button>
+                        <button onClick={()=>this.unmask()} className="btn btn-warning btn-lg" style={{zIndex:10}}>
+                            MASK OFF
+                        </button>
+                    </Col>
+                </Row>
+                <Masking mask={this.state.mask} />
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", overflowY:"scroll"}}>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
-                                <SectionTopping disableButton={this.state.boolDisableButton} close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)}  click={(data) => this.clickHandlerSubmitOrder(data)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={(type)=>this.payment(type)}/>
+                                <SectionTopping disableButton={this.state.boolDisableButton} close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={(type)=>this.payment(type)}/>
                                 <Numpad disableButton={this.state.boolDisableButton} clickOrder={(type)=>this.payment(type)} close={(action)=>this.closeStep3(action)} numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)} dataOrder={this.state.dataOrder}></Numpad>
                             </div>
                             {/* <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}

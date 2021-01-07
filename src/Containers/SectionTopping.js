@@ -134,14 +134,12 @@ const SectionTopping = (props) => {
                 </div>
                 <div className="col-md-12" id="section-spice">
                     <h3><b>Level Pedas</b></h3>
+                    <img id="noChili" src={`${process.env.PUBLIC_URL}/images/icons/no-chili.png`}
+                        style={{color:"#cc2525", cursor:"pointer", width:"60px", marginRight:"25px", float:"left"}} 
+                        onClick={()=>changeSpiceLevel(0, 0)} alt="no-chili" />
                     <div className="" id="sectionSpiceLevel">
                         {sectionSpiceLevel}
                     </div>
-                    <FontAwesomeIcon 
-                        icon={faTimesCircle} 
-                        size="3x" 
-                        style={{color:"#cc2525", cursor:"pointer", marginTop:"15px", marginLeft:"25px"}} 
-                        onClick={()=>changeSpiceLevel(0, 0)} />
                 </div>
                 
             </Row>
@@ -172,6 +170,8 @@ const SectionTopping = (props) => {
 
 const reset = () => {
     let spiceLevel = document.getElementsByClassName("spicelevel");
+    // document.getElementById("noChili").style.opacity = "1"
+    // document.getElementById("sectionSpiceLevel").style.opacity = "0.3"
     
     for(var i=0;i<spiceLevel.length;i++){
         spiceLevel[i].querySelector("img").src = `${process.env.PUBLIC_URL}/images/icons/chili-empty.png`
@@ -179,7 +179,6 @@ const reset = () => {
     }
 
     let qty = document.getElementsByClassName("qty")
-    let selectedQty = document.getElementsByClassName("selected-qty")
     for(var i=0;i<qty.length;i++){
         if(i === 0){
             qty[i].classList.add("selected-qty")
