@@ -126,27 +126,33 @@ const SectionTopping = (props) => {
     }
 
     return(
-        <div id="menuStep3_2" className="menuStep3" style={{display:"none"}}>
+        <div id="menuStep3_2" className="menuStep3" style={{display:"none", fontFamily:"lato"}}>
             <Row>
-                <div className="col-md-12 mt-3" id="section-qty">
-                    <h3><b>Jumlah</b></h3>
-                    {qtyPad}
-                </div>
-                <div className="col-md-12" id="section-spice">
-                    <h3><b>Level Pedas</b></h3>
-                    <img id="noChili" src={`${process.env.PUBLIC_URL}/images/icons/no-chili.png`}
-                        style={{color:"#cc2525", cursor:"pointer", width:"60px", marginRight:"25px", float:"left"}} 
-                        onClick={()=>changeSpiceLevel(0, 0)} alt="no-chili" />
-                    <div className="" id="sectionSpiceLevel">
-                        {sectionSpiceLevel}
+                <div className="col-md-12 mt-3 text-center" id="section-qty">
+                    <h3><b>Mau berapa mangkok?</b></h3>
+                    <div className="d-flex justify-content-center align-items-center">
+                        {qtyPad}
                     </div>
                 </div>
-                
+                <div className="col-md-12 text-center mt-5" id="section-spice">
+                    <h3><b>Pilih level pedas yang kamu mau</b></h3>
+                    <div className="d-flex justify-content-center align-items-center">
+                        <img id="noChili" src={`${process.env.PUBLIC_URL}/images/icons/no-chili.png`}
+                            style={{color:"#cc2525", cursor:"pointer", width:"60px", marginRight:"25px", float:"left"}} 
+                            onClick={()=>changeSpiceLevel(0, 0)} alt="no-chili" 
+                        />
+                        <div className="" id="sectionSpiceLevel">
+                            {sectionSpiceLevel}
+                        </div>
+                    </div>
+                </div>
             </Row>
-            <Row>
-                <div className="col-md-12 mt-3" id="section-topping">
-                    <h3><b>Topping</b></h3>
-                    {sectionTopping}
+            <Row className="mt-5">
+                <div className="col-md-12 text-center" id="section-topping">
+                    <h3><b>Mau tambahan topping?</b></h3>
+                    <div className="d-flex justify-content-center align-items-center">
+                        {sectionTopping}
+                    </div>
                 </div>
                 <div className="col-md-12 mt-3" id="section-price" style={{borderTop:"3px solid #dfdfdf"}}>
                     <table className="table table-borderless table-sm" style={{fontSize: "30px", fontFamily: "arial"}}>

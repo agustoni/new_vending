@@ -445,7 +445,7 @@ export class Step2 extends Component {
         return (
             <div>
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
-                <Row>
+                {/* <Row>
                     <Col md="12">
                         <button onClick={()=>this.mask()} className="btn btn-success btn-lg" style={{zIndex:10}}>
                             MASK ON
@@ -454,7 +454,7 @@ export class Step2 extends Component {
                             MASK OFF
                         </button>
                     </Col>
-                </Row>
+                </Row> */}
                 <Masking mask={this.state.mask} />
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>

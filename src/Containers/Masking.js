@@ -25,7 +25,7 @@ const masking = (props)=>{
             <div className="d-flex justify-content-center" 
                 style={{marginTop: "30%"}}
             > 
-                <img src={`${process.env.PUBLIC_URL}/images/loading2.gif`} alt="loading"/>
+                <img src={`${process.env.PUBLIC_URL}/images/loading1.gif`} alt="loading"/>
             </div>
         )
     }
