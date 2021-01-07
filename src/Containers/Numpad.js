@@ -12,7 +12,7 @@ const Numpad = (props) => {
         <div className="container menuStep3" id="menuStep3_1" style={{display: "none"}}>
             <div className="row">
                 <div className="col-12 text-center">
-                    <h4>Rp {dataOrder.price}</h4>
+                    <h4>Rp {Number(dataOrder.price).toLocaleString('id-ID', {maximumFractionDigits:0})}</h4>
                 </div>
             </div>
             <div className="row">
@@ -28,7 +28,7 @@ const Numpad = (props) => {
             </div>
             <div className="row">
                 <div className="col-md-12 mt-3 text-center" >
-                    <button className="btn btn-primary col-md-12" onClick={()=>props.close({action:"close"})} style={{fontSize: "35px", fontWeight: "600"}}>BACK</button>
+                    <button className="btn btn-primary col-md-12" onClick={()=>props.close({action:"close"})} style={{fontSize: "35px", fontWeight: "600"}} disabled={props.disableButton}>BACK</button>
                 </div>
             </div>
         </div>

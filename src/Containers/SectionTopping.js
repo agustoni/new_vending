@@ -79,8 +79,8 @@ const SectionTopping = (props) => {
                 <td>
                     Mie
                 </td>
-                <td>
-                    Rp {dataOrder.price}
+                <td className="text-right">
+                    Rp {Number(dataOrder.price).toLocaleString('id-ID', {maximumFractionDigits:0})}
                 </td>
             </tr>
         )
@@ -91,8 +91,8 @@ const SectionTopping = (props) => {
                     <td>
                         Ext Pedas
                     </td>
-                    <td>
-                        Rp {dataOrder.spiceLevelPrice}
+                    <td className="text-right">
+                        Rp {Number(dataOrder.spiceLevelPrice).toLocaleString('id-ID', {maximumFractionDigits:0})}
                     </td>
                 </tr>
             )
@@ -104,8 +104,8 @@ const SectionTopping = (props) => {
                     <td>
                         Ext Topping
                     </td>
-                    <td>
-                        Rp {dataOrder.toppingPrice}
+                    <td className="text-right">
+                        Rp {Number(dataOrder.toppingPrice).toLocaleString('id-ID', {maximumFractionDigits:0})}
                     </td>
                 </tr>
             )
@@ -116,8 +116,8 @@ const SectionTopping = (props) => {
                 <th>
                     Total
                 </th>
-                <th>
-                    Rp {(dataOrder.amount === undefined )? dataOrder.price : dataOrder.amount}
+                <th className="text-right">
+                    Rp {(dataOrder.amount === undefined )? Number(dataOrder.price).toLocaleString('id-ID', {maximumFractionDigits:0}) : Number(dataOrder.amount).toLocaleString('id-ID', {maximumFractionDigits:0})}
                 </th>
             </tr>
         )
@@ -164,7 +164,7 @@ const SectionTopping = (props) => {
             </Row>
             <Row>
                 <div className="col-md-6 mt-3 text-center" >
-                    <button className="btn btn-primary rounded-circle text-white" onClick={()=>props.close({action:"close"})} style={{width: "150px", height: "150px", fontSize: "35px", fontWeight: "600"}}>BACK</button>
+                    <button className="btn btn-primary rounded-circle text-white" onClick={()=>props.close({action:"close"})} style={{width: "150px", height: "150px", fontSize: "35px", fontWeight: "600"}} disabled={disableButton}>BACK</button>
                 </div>
                 <div className="col-md-6 mt-3 text-center">
                     <button className="btn btn-success rounded-circle" onClick={()=>props.clickOrder("mie")} style={{width: "150px", height: "150px", fontSize: "35px", fontWeight: "600"}} disabled={disableButton}>ORDER</button>

@@ -8,11 +8,8 @@ import axios from 'axios'
 import BackNavigation from '../Containers/BackNavigation'
 import BannerVideo from '../Containers/BannerVideo'
 import Payment from '../Containers/Payment'
+import IdleTimer from 'react-idle-timer';
 import Masking from '../Containers/Masking'
-
-
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faAngleDoubleLeft, faArrowAltCircleLeft} from '@fortawesome/free-solid-svg-icons'
 import './../css/style.css'
 
 export class Step2 extends Component {
@@ -30,9 +27,18 @@ export class Step2 extends Component {
             videoUrl : 'indomie_default.mp4',
             qrVal : '', 
             cekPaymentInterval: false,
+            finish: false,
+            boolDisableButton: false,
+            timeout:1000 * 30 * 1,
+            isTimedOut: false,
+            secondsQr : 60,
             mask: 0,
-            boolDisableButton: false
         }
+
+        this.idleTimer = null
+        this.onAction = this._onAction.bind(this)
+        this.onActive = this._onActive.bind(this)
+        this.onIdle = this._onIdle.bind(this)
     }
 
     componentDidMount(){
@@ -142,16 +148,34 @@ export class Step2 extends Component {
             let dataOrder = this.state.dataOrder
             dataOrder['trxNo'] = response.data.data.transactionNo
             dataOrder['reffNo'] = response.data.data.referenceNo
+
+            this.idleTimer.pause()
+
             this.setState({
                 ...this.state,
                 dataOrder,
                 cekPaymentInterval: true,
                 qrVal: response.data.data.qrisData
             }, ()=>{
-                console.log("qris")
-                console.log(this.state)
+                this.timerQr = setInterval(this.countDown.bind(this), 1000);
             })
         })
+    }
+
+    countDown() {
+        // Remove one second, set state so a re-render happens.
+        // console.log(this.state.secondsQr)
+        let secondsQr = this.state.secondsQr - 1;
+        this.setState({
+            ...this.state,
+            secondsQr
+        });
+        
+        // Check if we're at zero.
+        if (secondsQr == 0) { 
+            clearInterval(this.timerQr);
+            window.location.reload()
+        }
     }
 
     //NUMPAD
@@ -410,6 +434,30 @@ export class Step2 extends Component {
         })
     }
 
+    _onAction(e) {
+        console.log('user did something', e)
+        this.setState({isTimedOut: false})
+    }
+     
+    _onActive(e) {
+        console.log('user is active', e)
+        this.setState({isTimedOut: false})
+    }
+     
+    _onIdle(e) {
+        console.log('user is idle', e)
+        const isTimedOut = this.state.isTimedOut
+        if (isTimedOut) {
+            // this.props.history.push('/')
+            window.location.reload()
+            
+        } else {
+            // this.setState({showModal: true})
+            this.idleTimer.reset();
+            this.setState({isTimedOut: true})
+        }
+    }
+
     mask = ()=>{
         this.setState({
             ...this.state,
@@ -444,6 +492,7 @@ export class Step2 extends Component {
 
         return (
             <div>
+                <IdleTimer ref={ref => { this.idleTimer = ref }} element={document} onActive={this.onActive} onIdle={this.onIdle} onAction={this.onAction} debounce={250} timeout={this.state.timeout} />
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 {/* <Row>
                     <Col md="12">
@@ -479,7 +528,7 @@ export class Step2 extends Component {
                     </Col>
                     <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
                         <div id="menuStep4" className="m-2 row">
-                            <Payment intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()} bypass={()=>this.bypass()}/>
+                            <Payment seconds={this.state.secondsQr} startTimerQr={this.state.startTimerQr} intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()} bypass={()=>this.bypass()}/>
                         </div>
                         <Row className="mx-auto row">
                         {listDataProductItems}
