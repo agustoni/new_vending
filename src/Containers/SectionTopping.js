@@ -79,8 +79,8 @@ const SectionTopping = (props) => {
                 <td>
                     Mie
                 </td>
-                <td>
-                    Rp {dataOrder.price}
+                <td className="text-right">
+                    Rp {Number(dataOrder.price).toLocaleString('id-ID', {maximumFractionDigits:0})}
                 </td>
             </tr>
         )
@@ -91,8 +91,8 @@ const SectionTopping = (props) => {
                     <td>
                         Ext Pedas
                     </td>
-                    <td>
-                        Rp {dataOrder.spiceLevelPrice}
+                    <td className="text-right">
+                        Rp {Number(dataOrder.spiceLevelPrice).toLocaleString('id-ID', {maximumFractionDigits:0})}
                     </td>
                 </tr>
             )
@@ -104,8 +104,8 @@ const SectionTopping = (props) => {
                     <td>
                         Ext Topping
                     </td>
-                    <td>
-                        Rp {dataOrder.toppingPrice}
+                    <td className="text-right">
+                        Rp {Number(dataOrder.toppingPrice).toLocaleString('id-ID', {maximumFractionDigits:0})}
                     </td>
                 </tr>
             )
@@ -116,8 +116,8 @@ const SectionTopping = (props) => {
                 <th>
                     Total
                 </th>
-                <th>
-                    Rp {(dataOrder.amount === undefined )? dataOrder.price : dataOrder.amount}
+                <th className="text-right">
+                    Rp {(dataOrder.amount === undefined )? Number(dataOrder.price).toLocaleString('id-ID', {maximumFractionDigits:0}) : Number(dataOrder.amount).toLocaleString('id-ID', {maximumFractionDigits:0})}
                 </th>
             </tr>
         )

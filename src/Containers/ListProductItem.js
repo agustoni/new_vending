@@ -24,7 +24,7 @@ const ListProductItem = (props) => {
                 <CardImg top width="100%" src={`${process.env.PUBLIC_URL}/images/product/${image}`}  alt="Card image cap" />
                 <CardTitle tag="h6" className="mt-2" style={{color:textColor}}>{title}</CardTitle>
                 <CardText style={{color:textColor}}>{bodytext}</CardText>
-                <CardText style={{color:textColor}}>{`Rp. `+sellingPrice}</CardText>
+                <CardText style={{color:textColor}}>{`Rp. `+Number(sellingPrice).toLocaleString('id-ID', {maximumFractionDigits:0})}</CardText>
             </Card>
         </div>
     )
