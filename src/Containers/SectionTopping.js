@@ -129,11 +129,11 @@ const SectionTopping = (props) => {
         <div id="menuStep3_2" className="menuStep3" style={{display:"none"}}>
             <Row>
                 <div className="col-md-12 mt-3" id="section-qty">
-                    <h3><b>Jumlah</b></h3>
+                    <h3 className="text-center"><b>Jumlah Porsi</b></h3>
                     {qtyPad}
                 </div>
                 <div className="col-md-12" id="section-spice">
-                    <h3><b>Level Pedas</b></h3>
+                    <h3 className="text-center"><b>Level Pedas</b></h3>
                     <img id="noChili" src={`${process.env.PUBLIC_URL}/images/icons/no-chili.png`}
                         style={{color:"#cc2525", cursor:"pointer", width:"60px", marginRight:"25px", float:"left"}} 
                         onClick={()=>changeSpiceLevel(0, 0)} alt="no-chili" />
@@ -145,7 +145,7 @@ const SectionTopping = (props) => {
             </Row>
             <Row>
                 <div className="col-md-12 mt-3" id="section-topping">
-                    <h3><b>Topping</b></h3>
+                    <h3 className="text-center"><b>Topping</b></h3>
                     {sectionTopping}
                 </div>
                 <div className="col-md-12 mt-3" id="section-price" style={{borderTop:"3px solid #dfdfdf"}}>
