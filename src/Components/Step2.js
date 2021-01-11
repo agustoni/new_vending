@@ -188,6 +188,7 @@ export class Step2 extends Component {
                 amount: this.state.dataOrder.amount
             }
         }).then(response => {
+            // console.log(response)
             let dataOrder = this.state.dataOrder
             dataOrder['trxNo'] = response.data.data.transactionNo
             dataOrder['reffNo'] = response.data.data.referenceNo
@@ -590,7 +591,7 @@ export class Step2 extends Component {
                         {listDataProduct}
                     </Col>
                     <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
-                        <div id="menuStep4" className="m-2 row" style={{width:"100%"}}>
+                        <div id="menuStep4" className="m-2 row" style={{}}>
                             <Payment seconds={this.state.secondsQr} startTimerQr={this.state.startTimerQr} intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()} bypass={()=>this.bypass()}/>
                         </div>
                         <Row className="mx-auto row">
