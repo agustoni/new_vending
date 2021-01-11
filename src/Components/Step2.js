@@ -11,6 +11,7 @@ import Payment from '../Containers/Payment'
 import IdleTimer from 'react-idle-timer';
 import Masking from '../Containers/Masking'
 import './../css/style.css'
+import Recorder from 'recorder-js';
 
 export class Step2 extends Component {
 
@@ -33,15 +34,34 @@ export class Step2 extends Component {
             isTimedOut: false,
             secondsQr : 60,
             mask: 0,
+            playAudioProcess: false,
+            isRecording: false,
+            blob : '',
         }
 
         this.idleTimer = null
         this.onAction = this._onAction.bind(this)
         this.onActive = this._onActive.bind(this)
         this.onIdle = this._onIdle.bind(this)
+
+        this.audio = new Audio('build/audio/proses.mp3')
+
+        this.audioContext =  new (window.AudioContext || window.webkitAudioContext)();
+        this.recorder = new Recorder(this.audioContext, {
+            // An array of 255 Numbers
+            // You can use this to visualize the audio stream
+            // If you use react, check out react-wave-stream
+            // onAnalysed: data => console.log(data),
+            numChannels:1
+        });
     }
+    
 
     componentDidMount(){
+        navigator.mediaDevices.getUserMedia({audio: true})
+            .then(stream => this.recorder.init(stream))
+            .catch(err => console.log('Uh oh... unable to get stream...', err));
+        this.audio.addEventListener('ended', () => this.setState({ playAudioProcess: false }));
         this.getDataProductItem(this.props.selectedProductHome)
     }
 
@@ -61,6 +81,10 @@ export class Step2 extends Component {
         }
     }
 
+    componentWillUnmount() {
+        this.audio.removeEventListener('ended', () => this.setState({ playAudioProcess: false }));  
+    }
+
     bypass = () =>{
         axios.get('http://localhost/api/vending_machine/bypass.php', {
             params: {
@@ -69,7 +93,26 @@ export class Step2 extends Component {
         })
         .then(res => {
             console.log("bypass. . .")
-            
+            this.setState({
+                ...this.state,
+                playAudioProcess: !this.state.playAudioProcess
+            }, ()=>{
+                if(this.state.playAudioProcess){
+                    this.audio.play()
+                    this.audio.addEventListener('ended', () => {
+                        console.log('ended')
+                        this.startRecordAudio()
+                        setTimeout( () => {
+                            this.stopRecordAudio()
+
+                            this.setState({ ...this.state, playAudioProcess: false })
+                        }, 5000);
+                    });
+                }else{
+                    this.audio.pause()
+                }
+                // this.state.playAudioProcess ? this.audio.play() : this.audio.pause();
+            })
         })
         .catch(function (error) {
 
@@ -163,7 +206,6 @@ export class Step2 extends Component {
     }
 
     countDown() {
-        // Remove one second, set state so a re-render happens.
         // console.log(this.state.secondsQr)
         let secondsQr = this.state.secondsQr - 1;
         this.setState({
@@ -171,7 +213,6 @@ export class Step2 extends Component {
             secondsQr
         });
         
-        // Check if we're at zero.
         if (secondsQr == 0) { 
             clearInterval(this.timerQr);
             window.location.reload()
@@ -478,6 +519,45 @@ export class Step2 extends Component {
         setTimeout(() => {  console.log("World!"); }, 2000);
     }
 
+    startRecordAudio = () => {
+        this.recorder.start()
+            .then(() => {
+                console.log('record')
+                this.setState({
+                    ...this.state,
+                    isRecording : true
+                })
+            })
+    };
+
+    stopRecordAudio = () => {
+        this.recorder.stop()
+            .then(({blob, buffer}) => {
+                blob = blob;
+                console.log(blob)
+                let filename_ = new Date().toISOString();
+	            let filename = filename_.replace(/:/g, "_");
+                let formData = new FormData()
+                formData.append("audio_data", blob, filename);
+
+                axios.post('http://localhost/api/process/upload.php', formData,{ 
+                    headers: {'Content-Type': 'multipart/form-data'} }
+                ).then(res => {
+                    this.setState({ blob, isRecording: false });
+                    let audio1 = new Audio('http://localhost/api/process/nama.wav')
+                    audio1.play()
+                    audio1.addEventListener('ended', () => {
+                        audio1.removeEventListener('ended', () => console.log('ended'))
+                        window.location.reload()
+                    });
+                }).catch(function (error) {
+                    console.log(error);
+                });
+                // buffer is an AudioBuffer
+            });
+        
+    };
+
     render() {
         let {product, spiceLevel, topping, selectedProductHome} = this.props
         let listDataProduct = product.map((v, key) =>
@@ -494,16 +574,6 @@ export class Step2 extends Component {
             <div>
                 <IdleTimer ref={ref => { this.idleTimer = ref }} element={document} onActive={this.onActive} onIdle={this.onIdle} onAction={this.onAction} debounce={250} timeout={this.state.timeout} />
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
-                {/* <Row>
-                    <Col md="12">
-                        <button onClick={()=>this.mask()} className="btn btn-success btn-lg" style={{zIndex:10}}>
-                            MASK ON
-                        </button>
-                        <button onClick={()=>this.unmask()} className="btn btn-warning btn-lg" style={{zIndex:10}}>
-                            MASK OFF
-                        </button>
-                    </Col>
-                </Row> */}
                 <Masking mask={this.state.mask} />
                 <Row className="m-auto">
                     <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
@@ -513,13 +583,6 @@ export class Step2 extends Component {
                                 <SectionTopping disableButton={this.state.boolDisableButton} close={(action)=>this.closeStep3(action)} dataOrder={this.state.dataOrder} changeQty = {(data) => this.changeHandlerQty(data)} changeSpiceLevel = {(level, price) => this.changeHandlerSpiceLevel(level, price)} boolSelectProductItem={this.state.boolSelectProductItem} spiceLevel={spiceLevel} topping={topping} changeTopping = {(topping, price, action) => this.changeHandlerTopping(topping, price, action)} clickOrder={(type)=>this.payment(type)}/>
                                 <Numpad disableButton={this.state.boolDisableButton} clickOrder={(type)=>this.payment(type)} close={(action)=>this.closeStep3(action)} numberValue={this.state.number} click={(num)=>this.clickHandlerNumpad(num)} dataOrder={this.state.dataOrder}></Numpad>
                             </div>
-                            {/* <div id="closeStep3" style={{width:"10%", float:"left", height:"100%", borderLeft: "3px solid #dfdfdf", position:"relative"}}
-                            onClick={()=>this.clickHandlerProduct({action:"close"})}>
-                            <FontAwesomeIcon 
-                                icon={faAngleDoubleLeft} 
-                                size="3x" 
-                                style={{color: "#848484", cursor: "pointer", position: "absolute", left: "0px", top: "45%"}} />
-                            </div> */}
                         </div>
                         <div className="row m-2">
                             <BackNavigation click={this.props.previousStep}></BackNavigation>
@@ -527,7 +590,7 @@ export class Step2 extends Component {
                         {listDataProduct}
                     </Col>
                     <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
-                        <div id="menuStep4" className="m-2 row">
+                        <div id="menuStep4" className="m-2 row" style={{width:"100%"}}>
                             <Payment seconds={this.state.secondsQr} startTimerQr={this.state.startTimerQr} intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()} bypass={()=>this.bypass()}/>
                         </div>
                         <Row className="mx-auto row">
