@@ -93,26 +93,6 @@ export class Step2 extends Component {
         })
         .then(res => {
             console.log("bypass. . .")
-            this.setState({
-                ...this.state,
-                playAudioProcess: !this.state.playAudioProcess
-            }, ()=>{
-                if(this.state.playAudioProcess){
-                    this.audio.play()
-                    this.audio.addEventListener('ended', () => {
-                        console.log('ended')
-                        this.startRecordAudio()
-                        setTimeout( () => {
-                            this.stopRecordAudio()
-
-                            this.setState({ ...this.state, playAudioProcess: false })
-                        }, 5000);
-                    });
-                }else{
-                    this.audio.pause()
-                }
-                // this.state.playAudioProcess ? this.audio.play() : this.audio.pause();
-            })
         })
         .catch(function (error) {
 
@@ -140,10 +120,29 @@ export class Step2 extends Component {
                             cekPaymentInterval : false,
                             mask: 2
                         }, ()=>{
-                            console.log("FINISH ORDER. . . !!!!")
-                            setTimeout(function() {
-                                window.location.reload()
-                              }, 3000);
+                            this.setState({
+                                ...this.state,
+                                playAudioProcess: !this.state.playAudioProcess
+                            }, ()=>{
+                                if(this.state.playAudioProcess){
+                                    this.audio.play()
+                                    this.audio.addEventListener('ended', () => {
+                                        console.log('ended')
+                                        this.startRecordAudio()
+                                        setTimeout( () => {
+                                            this.stopRecordAudio()
+                
+                                            this.setState({ ...this.state, playAudioProcess: false })
+                                        }, 4000);
+                                    });
+                                }else{
+                                    this.audio.pause()
+                                }
+                            })
+                            // console.log("FINISH ORDER. . . !!!!")
+                            // setTimeout(function() {
+                            //     window.location.reload()
+                            //   }, 3000);
                         })
                     }
                 })
