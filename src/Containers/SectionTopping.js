@@ -45,13 +45,11 @@ const SectionTopping = (props) => {
             toppingIcon.style.opacity = "0.5"
             checkIcon.style.display = "none"
             el.classList.remove("selected")
-            // price = 0
             action = "remove"
         }else{
             toppingIcon.style.opacity = "1"
             checkIcon.style.display = "block"
             el.classList.add("selected")
-            // price = x.price
             action = "add"
         }
 
@@ -148,9 +146,9 @@ const SectionTopping = (props) => {
                 </div>
             </Row>
             <Row className="mt-5">
-                <div className="col-md-12 text-center" id="section-topping">
+                <div className="col-md-12 text-center">
                     <h3><b>Mau tambahan topping?</b></h3>
-                    <div className="d-flex justify-content-center align-items-center">
+                    <div className="d-flex justify-content-center align-items-center" id="section-topping">
                         {sectionTopping}
                     </div>
                 </div>

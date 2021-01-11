@@ -27,7 +27,7 @@ export class Step2 extends Component {
             videoUrl : 'indomie_default.mp4',
             qrVal : '', 
             cekPaymentInterval: false,
-            finish: false,
+            // finish: false,
             boolDisableButton: false,
             timeout:1000 * 30 * 1,
             isTimedOut: false,
