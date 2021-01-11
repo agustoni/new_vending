@@ -3,7 +3,7 @@ import {Row} from "reactstrap";
 import './../css/topping.css';
 import './../css/style.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTimesCircle, faCheck, faArrowAltCircleLeft} from '@fortawesome/free-solid-svg-icons'
+import {faCheck} from '@fortawesome/free-solid-svg-icons'
 
 const SectionTopping = (props) => {
     const qtyPad = []

@@ -10,6 +10,7 @@ import BannerVideo from '../Containers/BannerVideo'
 import Payment from '../Containers/Payment'
 import IdleTimer from 'react-idle-timer';
 import Masking from '../Containers/Masking'
+import Scroll from '../Containers/Scroll'
 import './../css/style.css'
 import Recorder from 'recorder-js';
 
@@ -30,7 +31,7 @@ export class Step2 extends Component {
             cekPaymentInterval: false,
             // finish: false,
             boolDisableButton: false,
-            timeout:1000 * 30 * 1,
+            timeout:1000 * 60 * 60,
             isTimedOut: false,
             secondsQr : 60,
             mask: 0,
@@ -285,6 +286,8 @@ export class Step2 extends Component {
                 document.getElementById(menuStep3[i].id).style.display = "none"
             }
         }
+
+        this.changeGrid();
     }
 
     changeHandlerSpiceLevel = (level, price) =>{
@@ -472,6 +475,8 @@ export class Step2 extends Component {
             var target2 = document.getElementById('menuStep4')
             target2.style.width = "0px";
             target2.style.border = "0px";
+
+            this.changeGrid();
         })
     }
 
@@ -528,7 +533,7 @@ export class Step2 extends Component {
                     isRecording : true
                 })
             })
-    };
+    }
 
     stopRecordAudio = () => {
         this.recorder.stop()
@@ -556,7 +561,63 @@ export class Step2 extends Component {
                 // buffer is an AudioBuffer
             });
         
-    };
+    }
+
+    y = 0//untuk titik awal scroll
+
+    scroll = (direction, target) =>{
+        const scrollHeight = 200
+        var cont = document.getElementById(target);
+        var btnUp = cont.getElementsByClassName("btn-scroll-up")[0];
+        var btnDown = cont.getElementsByClassName("btn-scroll-down")[0];
+        let opcityBtnUp, opcityBtnDown
+
+        if(direction === "up"){
+            if(this.y > 0){
+                this.y = Number(this.y) - scrollHeight;
+                opcityBtnUp = "1"
+                opcityBtnDown = "1"
+            }else{
+                this.y = 0
+                opcityBtnUp = "0.4"
+                opcityBtnDown = "1"
+            }
+        }else{
+            if(this.y < 600){
+                this.y = Number(this.y) + scrollHeight;
+                opcityBtnUp = "1"
+                opcityBtnDown = "1"
+            }else{
+                this.y = 600
+                opcityBtnUp = "1"
+                opcityBtnDown = "0.4"
+            }
+        }
+
+        btnUp.style.opacity = opcityBtnUp
+        btnDown.style.opacity = opcityBtnDown
+
+        document.getElementById(target).scrollTo(0, this.y);
+    }
+
+    changeGrid = () => {
+        var target1 = document.getElementById("sectionPrd");
+        var target2 = document.getElementById("sectionPrdDetail");
+    
+        if(target1.classList.contains("col-md-4")){
+            target1.classList.remove("col-md-4", "col-lg-4");
+            target1.classList.add("col-md-6", "col-lg-6");
+    
+            target2.classList.remove("col-md-8", "col-lg-8");
+            target2.classList.add("col-md-6", "col-lg-6");
+        }else{
+            target1.classList.add("col-md-4", "col-lg-4");
+            target1.classList.remove("col-md-6", "col-lg-6");
+    
+            target2.classList.add("col-md-8", "col-lg-8");
+            target2.classList.remove("col-md-6", "col-lg-6");
+        }
+    }
 
     render() {
         let {product, spiceLevel, topping, selectedProductHome} = this.props
@@ -569,14 +630,14 @@ export class Step2 extends Component {
         let listDataProductItems = this.state.productItems.map((v, key) => 
             <ListProductItem activeSelectedProductItem={this.state.activeSelectedProductItem} click={(dataPrdItem)=>this.clickHandlerProduct(dataPrdItem)} key={key} grid={'col-md-6 col-lg-6 pt-2 pb-0 pr-2 pl-0'} image={v.image} title={v.name} bodytext={v.text} backgroundColor={v.color} textColor={v.text_color} sellingPrice={v.selling_price} idCategory={v.id_category} id={v.id} code={v.code} videoUrl={v.video} method={v.method}></ListProductItem>
         )
-
+        
         return (
             <div>
                 <IdleTimer ref={ref => { this.idleTimer = ref }} element={document} onActive={this.onActive} onIdle={this.onIdle} onAction={this.onAction} debounce={250} timeout={this.state.timeout} />
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Masking mask={this.state.mask} />
                 <Row className="m-auto">
-                    <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
+                    <Col md="4" lg="4" id="sectionPrd" className="p-0" style={{overflowY: 'auto', height: "670px", transition: "all 400ms ease"}}>
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", overflowY:"scroll"}}>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
@@ -588,14 +649,16 @@ export class Step2 extends Component {
                             <BackNavigation click={this.props.previousStep}></BackNavigation>
                         </div>
                         {listDataProduct}
+                        <Scroll click={(direction)=>this.scroll(direction, "sectionPrd")}/>
                     </Col>
-                    <Col md="6" lg="6" className="p-0" style={{overflowY: 'auto'}}>
+                    <Col md="8" lg="8" id="sectionPrdDetail"  className="p-0" style={{overflowY: 'auto', height: "670px", transition: "all 400ms ease"}}>
                         <div id="menuStep4" className="m-2 row" style={{}}>
                             <Payment seconds={this.state.secondsQr} startTimerQr={this.state.startTimerQr} intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()} bypass={()=>this.bypass()}/>
                         </div>
                         <Row className="mx-auto row">
                         {listDataProductItems}
                         </Row>
+                        <Scroll click={(direction)=>this.scroll(direction, "sectionPrdDetail")}/>
                     </Col>
                 </Row>
                 
