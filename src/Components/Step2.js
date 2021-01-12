@@ -566,15 +566,16 @@ export class Step2 extends Component {
     y = 0//untuk titik awal scroll
 
     scroll = (direction, target) =>{
-        const scrollHeight = 200
+        const scrollHeight = 350
         var cont = document.getElementById(target);
         var btnUp = cont.getElementsByClassName("btn-scroll-up")[0];
         var btnDown = cont.getElementsByClassName("btn-scroll-down")[0];
         let opcityBtnUp, opcityBtnDown
 
         if(direction === "up"){
+            this.y = Number(this.y) - scrollHeight;
+            
             if(this.y > 0){
-                this.y = Number(this.y) - scrollHeight;
                 opcityBtnUp = "1"
                 opcityBtnDown = "1"
             }else{
@@ -583,17 +584,18 @@ export class Step2 extends Component {
                 opcityBtnDown = "1"
             }
         }else{
-            if(this.y < 600){
-                this.y = Number(this.y) + scrollHeight;
+            this.y = Number(this.y) + scrollHeight;
+
+            if(this.y < 350){
                 opcityBtnUp = "1"
                 opcityBtnDown = "1"
             }else{
-                this.y = 600
+                this.y = 350
                 opcityBtnUp = "1"
                 opcityBtnDown = "0.4"
             }
         }
-
+console.log(this.y)
         btnUp.style.opacity = opcityBtnUp
         btnDown.style.opacity = opcityBtnDown
 
@@ -637,7 +639,7 @@ export class Step2 extends Component {
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Masking mask={this.state.mask} />
                 <Row className="m-auto">
-                    <Col md="4" lg="4" id="sectionPrd" className="p-0" style={{overflowY: 'auto', height: "670px", transition: "all 400ms ease"}}>
+                    <Col md="4" lg="4" id="sectionPrd" className="p-0" style={{overflowY: 'auto', height: "1000px", transition: "all 400ms ease"}}>
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", overflowY:"scroll"}}>
                             <div style={{width:"100%", float:"left", padding:"0px 15px"}}>
                                 <h3 id="productName" className="my-5 text-center">{}</h3>
@@ -651,7 +653,7 @@ export class Step2 extends Component {
                         {listDataProduct}
                         <Scroll click={(direction)=>this.scroll(direction, "sectionPrd")}/>
                     </Col>
-                    <Col md="8" lg="8" id="sectionPrdDetail"  className="p-0" style={{overflowY: 'auto', height: "670px", transition: "all 400ms ease"}}>
+                    <Col md="8" lg="8" id="sectionPrdDetail"  className="p-0" style={{overflowY: 'auto', height: "1000px", transition: "all 400ms ease"}}>
                         <div id="menuStep4" className="m-2 row" style={{}}>
                             <Payment seconds={this.state.secondsQr} startTimerQr={this.state.startTimerQr} intv={this.state.cekPaymentInterval} qrVal={this.state.qrVal} cancelOrder={()=>this.cancelOrder()} bypass={()=>this.bypass()}/>
                         </div>
