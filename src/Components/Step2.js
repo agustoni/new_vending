@@ -31,7 +31,7 @@ export class Step2 extends Component {
             cekPaymentInterval: false,
             // finish: false,
             boolDisableButton: false,
-            timeout:1000 * 60 * 60,
+            timeout:1000 * 30 * 1,
             isTimedOut: false,
             secondsQr : 60,
             mask: 0,
@@ -73,10 +73,8 @@ export class Step2 extends Component {
 
         if(this.state.cekPaymentInterval !== prevState.cekPaymentInterval){
             if(this.state.cekPaymentInterval){
-                console.log("interval on")
                 this.cekPayment()
             }else{
-                console.log("interval off")
                 clearInterval(this.interval)
             }
         }
@@ -110,12 +108,7 @@ export class Step2 extends Component {
                     }
                 })
                 .then(res => {
-                    console.log("sad")
-                    console.log(res.data)
-
                     if(res.data.pymstt === "PAID"){
-                        console.log("SUDAH LUNAS")
-                        console.log(this.state.dataOrder)
                         this.setState({
                             ...this.state,
                             cekPaymentInterval : false,
@@ -128,7 +121,6 @@ export class Step2 extends Component {
                                 if(this.state.playAudioProcess){
                                     this.audio.play()
                                     this.audio.addEventListener('ended', () => {
-                                        console.log('ended')
                                         this.startRecordAudio()
                                         setTimeout( () => {
                                             this.stopRecordAudio()
@@ -140,10 +132,6 @@ export class Step2 extends Component {
                                     this.audio.pause()
                                 }
                             })
-                            // console.log("FINISH ORDER. . . !!!!")
-                            // setTimeout(function() {
-                            //     window.location.reload()
-                            //   }, 3000);
                         })
                     }
                 })
@@ -169,7 +157,6 @@ export class Step2 extends Component {
                 productItems :res.data,
                 activeSelectedProduct : idProduct
             }, ()=>{
-                // console.log(this.state.productItems)
             })
         })
         .catch(function (error) {
@@ -188,7 +175,6 @@ export class Step2 extends Component {
                 amount: this.state.dataOrder.amount
             }
         }).then(response => {
-            // console.log(response)
             let dataOrder = this.state.dataOrder
             dataOrder['trxNo'] = response.data.data.transactionNo
             dataOrder['reffNo'] = response.data.data.referenceNo
@@ -207,7 +193,6 @@ export class Step2 extends Component {
     }
 
     countDown() {
-        // console.log(this.state.secondsQr)
         let secondsQr = this.state.secondsQr - 1;
         this.setState({
             ...this.state,
@@ -231,8 +216,6 @@ export class Step2 extends Component {
             
         }else if(num === "ok"){
             if(inputVal !== ""){
-                //jika oke
-                console.log("oke")
             }
         }else{
             inputVal += num
@@ -508,20 +491,14 @@ export class Step2 extends Component {
         this.setState({
             ...this.state,
             mask : 1
-        }, ()=>{
-            console.log("MASK ON")
         })
-        setTimeout(() => {  console.log("World!"); }, 2000);
     }
 
     unmask = ()=>{
         this.setState({
             ...this.state,
             mask : 0
-        }, ()=>{
-            console.log("MASK OFF")
         })
-        setTimeout(() => {  console.log("World!"); }, 2000);
     }
 
     startRecordAudio = () => {
@@ -595,7 +572,7 @@ export class Step2 extends Component {
                 opcityBtnDown = "0.4"
             }
         }
-console.log(this.y)
+
         btnUp.style.opacity = opcityBtnUp
         btnDown.style.opacity = opcityBtnDown
 
