@@ -31,7 +31,7 @@ export class Step2 extends Component {
             cekPaymentInterval: false,
             // finish: false,
             boolDisableButton: false,
-            timeout:1000 * 30 * 1,
+            timeout:1000 * 30 * 3,
             isTimedOut: false,
             secondsQr : 60,
             mask: 0,
@@ -45,7 +45,7 @@ export class Step2 extends Component {
         this.onActive = this._onActive.bind(this)
         this.onIdle = this._onIdle.bind(this)
 
-        this.audio = new Audio('audio/proses.mp3')
+        this.audio = new Audio(`${process.env.PUBLIC_URL}/audio/proses.mp3`)
 
         this.audioContext =  new (window.AudioContext || window.webkitAudioContext)();
         this.recorder = new Recorder(this.audioContext, {
@@ -79,8 +79,8 @@ export class Step2 extends Component {
             }
         }
 
-        if(this.state.boolSelectProductItem !== prevState.boolSelectProductItem){
-            if(this.state.boolSelectProductItem){
+        if(this.state.activeSelectedProductItem !== prevState.activeSelectedProductItem){
+            if(this.state.activeSelectedProductItem){
                 this.changeGrid("open");
             }else{
                 this.changeGrid("close");
@@ -130,6 +130,8 @@ export class Step2 extends Component {
                                 if(this.state.playAudioProcess){
                                     this.audio.play()
                                     this.audio.addEventListener('ended', () => {
+                                        document.getElementById("process_1").classList.add("d-none")
+                                        document.getElementById("process_2").classList.remove("d-none")
                                         this.startRecordAudio()
                                         setTimeout( () => {
                                             this.stopRecordAudio()
@@ -452,7 +454,7 @@ export class Step2 extends Component {
         this.setState({
             ...this.state,
             dataOrder: {},
-            boolSelectProductItem : false,
+            boolSelectProductItem : true,
             boolDisableButton : false,
             activeSelectedProductItem: null,
         }, ()=>{
@@ -464,7 +466,6 @@ export class Step2 extends Component {
             var target2 = document.getElementById('menuStep4')
             target2.style.width = "0px";
             target2.style.border = "0px";
-
         })
     }
 
@@ -531,9 +532,13 @@ export class Step2 extends Component {
                     this.setState({ blob, isRecording: false });
                     let audio1 = new Audio('http://localhost/api/process/nama.wav')
                     audio1.play()
+                    document.getElementById("process_2").textContent = "Sebentar ya. . ."
                     audio1.addEventListener('ended', () => {
-                        audio1.removeEventListener('ended', () => console.log('ended'))
-                        window.location.reload()
+                        document.getElementById("process_2").classList.add("d-none")
+                        document.getElementById("process_3").classList.remove("d-none")
+                        
+                        audio1.removeEventListener('ended', () => {console.log('ended')})
+                        // window.location.reload()
                     });
                 }).catch(function (error) {
                     console.log(error);
@@ -599,20 +604,18 @@ export class Step2 extends Component {
             target2.classList.add("col-md-8", "col-lg-8");
             target2.classList.remove("col-md-6", "col-lg-6");
         }
+    }
 
-        // if(target1.classList.contains("col-md-4")){
-        //     target1.classList.remove("col-md-4", "col-lg-4");
-        //     target1.classList.add("col-md-6", "col-lg-6");
-    
-        //     target2.classList.remove("col-md-8", "col-lg-8");
-        //     target2.classList.add("col-md-6", "col-lg-6");
-        // }else{
-        //     target1.classList.add("col-md-4", "col-lg-4");
-        //     target1.classList.remove("col-md-6", "col-lg-6");
-    
-        //     target2.classList.add("col-md-8", "col-lg-8");
-        //     target2.classList.remove("col-md-6", "col-lg-6");
-        // }
+    testrecord = ()=>{
+        this.audio.play()
+        this.audio.addEventListener('ended', () => {
+            this.startRecordAudio()
+            setTimeout( () => {
+                this.stopRecordAudio()
+
+                this.setState({ ...this.state, playAudioProcess: false })
+            }, 4000);
+        });
     }
 
     render() {
@@ -632,6 +635,13 @@ export class Step2 extends Component {
                 <IdleTimer ref={ref => { this.idleTimer = ref }} element={document} onActive={this.onActive} onIdle={this.onIdle} onAction={this.onAction} debounce={250} timeout={this.state.timeout} />
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Masking mask={this.state.mask} />
+                <Row>
+                    <Col md="6">
+                        <button className="col-md-12 btn btn-warning" onClick={()=>this.testrecord()}>
+                            test record
+                        </button>
+                    </Col>
+                </Row>
                 <Row className="m-auto">
                     <Col md="4" lg="4" id="sectionPrd" className="p-0" style={{overflowY: 'auto', height: "1000px", transition: "all 400ms ease"}}>
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", overflowY:"scroll"}}>
