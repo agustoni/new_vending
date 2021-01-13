@@ -1,7 +1,6 @@
 import React from 'react'
 import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
+    Card, CardImg, CardText, CardTitle, Button
 } from 'reactstrap';
 
 const CardProduct = (props) => {

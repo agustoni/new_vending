@@ -1,4 +1,4 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Row} from "reactstrap";
 import './../css/topping.css';
 import './../css/style.css'
@@ -18,7 +18,7 @@ const SectionTopping = (props) => {
     
         qtyPad.push(
             <div className="qty-pad" key={i}>
-                <div className={Number(qty) == 1 ? `num d-flex justify-content-center qty align-items-center selected-qty`:`num d-flex justify-content-center qty align-items-center `} id={"qty_"+i} onClick={()=>changeQty(qty)}>
+                <div className={Number(qty) === 1 ? `num d-flex justify-content-center qty align-items-center selected-qty`:`num d-flex justify-content-center qty align-items-center `} id={"qty_"+i} onClick={()=>changeQty(qty)}>
                     <div className="txt btn-number">
                         {i}
                     </div>
@@ -177,13 +177,13 @@ const reset = () => {
     // document.getElementById("noChili").style.opacity = "1"
     // document.getElementById("sectionSpiceLevel").style.opacity = "0.3"
     
-    for(var i=0;i<spiceLevel.length;i++){
+    for(let i=0;i<spiceLevel.length;i++){
         spiceLevel[i].querySelector("img").src = `${process.env.PUBLIC_URL}/images/icons/chili-empty.png`
         spiceLevel[i].classList.remove("selected-spice")
     }
 
     let qty = document.getElementsByClassName("qty")
-    for(var i=0;i<qty.length;i++){
+    for(let i=0;i<qty.length;i++){
         if(i === 0){
             qty[i].classList.add("selected-qty")
         }else{
@@ -192,7 +192,7 @@ const reset = () => {
     }
 
     let toppingItem = document.querySelectorAll("#section-topping > div");
-    for(var i = 0; i < toppingItem.length; i++) {
+    for(let i = 0; i < toppingItem.length; i++) {
         toppingItem[i].getElementsByTagName('img')[0].style.opacity = "0.5"
         toppingItem[i].getElementsByTagName('svg')[0].style.display = "none"
         toppingItem[i].classList.remove("selected")

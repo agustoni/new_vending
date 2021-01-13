@@ -45,7 +45,7 @@ export class Step2 extends Component {
         this.onActive = this._onActive.bind(this)
         this.onIdle = this._onIdle.bind(this)
 
-        this.audio = new Audio('build/audio/proses.mp3')
+        this.audio = new Audio('audio/proses.mp3')
 
         this.audioContext =  new (window.AudioContext || window.webkitAudioContext)();
         this.recorder = new Recorder(this.audioContext, {
@@ -82,6 +82,7 @@ export class Step2 extends Component {
 
     componentWillUnmount() {
         this.audio.removeEventListener('ended', () => this.setState({ playAudioProcess: false }));  
+        clearInterval(this.interval)
     }
 
     bypass = () =>{
@@ -198,8 +199,7 @@ export class Step2 extends Component {
             ...this.state,
             secondsQr
         });
-        
-        if (secondsQr == 0) { 
+        if (secondsQr === 0) { 
             clearInterval(this.timerQr);
             window.location.reload()
         }
@@ -284,12 +284,10 @@ export class Step2 extends Component {
         }, () => {
             let spiceLevel = document.getElementsByClassName("spicelevel");
             let iconSpice = document.getElementById("sectionSpiceLevel").getElementsByTagName('img')
-            let x = 0
             for(var i=0;i<spiceLevel.length;i++){
                 if(i<level){
                     spiceLevel[i].classList.add("selected-spice")
                     iconSpice[i].src = `${process.env.PUBLIC_URL}/images/icons/chili-colored.png`
-                    x++
                 }else{
                     spiceLevel[i].classList.remove("selected-spice")
                     iconSpice[i].src = `${process.env.PUBLIC_URL}/images/icons/chili-empty.png`
@@ -515,8 +513,6 @@ export class Step2 extends Component {
     stopRecordAudio = () => {
         this.recorder.stop()
             .then(({blob, buffer}) => {
-                blob = blob;
-                console.log(blob)
                 let filename_ = new Date().toISOString();
 	            let filename = filename_.replace(/:/g, "_");
                 let formData = new FormData()
@@ -599,7 +595,7 @@ export class Step2 extends Component {
     }
 
     render() {
-        let {product, spiceLevel, topping, selectedProductHome} = this.props
+        let {product, spiceLevel, topping} = this.props
         let listDataProduct = product.map((v, key) =>
                                 <Row className="m-2"key={key}>
                                     <ListProduct activeSelectedProduct = {this.state.activeSelectedProduct} click={()=>this.getDataProductItem(v.id)} image={v.image} backgroundColor={v.color} title={v.product} bodytext={v.text} textColor={v.text_color} idCategory={v.id_category} id={v.id}></ListProduct>

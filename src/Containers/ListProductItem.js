@@ -1,8 +1,5 @@
 import React from 'react'
-import {
-    Card, CardImg, CardText, CardBody,
-    CardTitle, CardSubtitle, Button
-} from 'reactstrap';
+import {Card, CardImg, CardText, CardTitle} from 'reactstrap';
 
 const ListProductItem = (props) => {
     let {grid, method, image, title, bodytext, backgroundColor, textColor, sellingPrice, idCategory, id, code, activeSelectedProductItem, videoUrl} = props;

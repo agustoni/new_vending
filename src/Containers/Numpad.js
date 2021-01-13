@@ -18,7 +18,7 @@ const Numpad = (props) => {
             <div className="row">
                 <div className="col-md-11" style={{marginLeft:"auto", marginRight:"auto"}}>
                     <div className="col-md-12">
-                        <InputMask value={numberValue} name="name" id="telNumber" className="form-control tel" mask="+6\2 9999999999999" maskChar=" " />
+                        <InputMask value={numberValue} name="name" id="telNumber" className="form-control tel" mask="+62 9999999999999" maskChar=" " />
                         {/* <input type="text" name="name" id="telNumber" className="form-control tel" value={numberValue} readOnly/> */}
                         <div className="row justify-content-center align-items-center p-2">
                         {getBtn}
