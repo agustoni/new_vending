@@ -13,7 +13,7 @@ const ListProduct = (props) => {
     return (
         <ListGroup className="w-100 rounded-0" onClick={click} data-category={idCategory}>
             <ListGroupItem style={{ backgroundColor : selectedBackground, borderColor: "dec5ff", borderWidth: "5px", cursor: 'pointer'}} >
-                <img className="img-fluid mx-auto d-block" src={`${process.env.PUBLIC_URL}/images/product/${image}`}  alt="Card image cap" />
+                <img className="img-fluid mx-auto d-block w-100" src={`${process.env.PUBLIC_URL}/images/product/${image}`}  alt={`product ${id}`} />
                 {/* <div className="ml-2">
                     <h3 style={{color:textColor}}>{title}</h3>
                     <p style={{color:textColor}}>{bodytext}</p>

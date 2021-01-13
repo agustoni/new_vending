@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import StepWizard from 'react-step-wizard';
 import Step1 from './Step1'
 import Step2 from './Step2'
-import Step3 from './Step3'
 import { Container } from "reactstrap"
 import axios from 'axios'
 export class Form extends Component {
