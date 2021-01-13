@@ -78,6 +78,14 @@ export class Step2 extends Component {
                 clearInterval(this.interval)
             }
         }
+
+        if(this.state.boolSelectProductItem !== prevState.boolSelectProductItem){
+            if(this.state.boolSelectProductItem){
+                this.changeGrid("open");
+            }else{
+                this.changeGrid("close");
+            }
+        }
     }
 
     componentWillUnmount() {
@@ -249,6 +257,8 @@ export class Step2 extends Component {
             boolSelectProductItem : true,
             activeSelectedProductItem: x.id,
             videoUrl
+        },()=>{
+
         })
 
         if(x.action === "open"){
@@ -269,8 +279,6 @@ export class Step2 extends Component {
                 document.getElementById(menuStep3[i].id).style.display = "none"
             }
         }
-
-        this.changeGrid();
     }
 
     changeHandlerSpiceLevel = (level, price) =>{
@@ -446,7 +454,7 @@ export class Step2 extends Component {
         this.setState({
             ...this.state,
             dataOrder: {},
-            boolSelectProductItem : true,
+            boolSelectProductItem : false,
             boolDisableButton : false,
             activeSelectedProductItem: null,
         }, ()=>{
@@ -459,7 +467,6 @@ export class Step2 extends Component {
             target2.style.width = "0px";
             target2.style.border = "0px";
 
-            this.changeGrid();
         })
     }
 
@@ -579,11 +586,11 @@ export class Step2 extends Component {
         document.getElementById(target).scrollTo(0, this.y);
     }
 
-    changeGrid = () => {
+    changeGrid = (action) => {
         var target1 = document.getElementById("sectionPrd");
         var target2 = document.getElementById("sectionPrdDetail");
     
-        if(target1.classList.contains("col-md-4")){
+        if(action === "open"){
             target1.classList.remove("col-md-4", "col-lg-4");
             target1.classList.add("col-md-6", "col-lg-6");
     
@@ -596,6 +603,20 @@ export class Step2 extends Component {
             target2.classList.add("col-md-8", "col-lg-8");
             target2.classList.remove("col-md-6", "col-lg-6");
         }
+
+        // if(target1.classList.contains("col-md-4")){
+        //     target1.classList.remove("col-md-4", "col-lg-4");
+        //     target1.classList.add("col-md-6", "col-lg-6");
+    
+        //     target2.classList.remove("col-md-8", "col-lg-8");
+        //     target2.classList.add("col-md-6", "col-lg-6");
+        // }else{
+        //     target1.classList.add("col-md-4", "col-lg-4");
+        //     target1.classList.remove("col-md-6", "col-lg-6");
+    
+        //     target2.classList.add("col-md-8", "col-lg-8");
+        //     target2.classList.remove("col-md-6", "col-lg-6");
+        // }
     }
 
     render() {
