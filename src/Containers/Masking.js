@@ -1,4 +1,5 @@
 import React from 'react'
+import './../css/loading.css'
 
 const masking = (props)=>{
     let {mask} = props
@@ -12,10 +13,19 @@ const masking = (props)=>{
         zIndex = 3
         opacity = 1
         content = (
-            <span className="d-flex justify-content-center" 
-                style={{marginTop: "30%", fontSize: "50px", fontWeight: "600"}}> 
-                    TERIMA KASIH
-            </span>
+            <div className="loader" style={{marginTop: "30%", fontSize: "50px", fontWeight: "600"}}>
+                <span id="process_1"> 
+                    Mohon menunggu. . .
+                </span>
+                <span id="process_2" className="d-none">
+                    Sebutkan nama anda. . . 
+                </span>
+                <span id="process_3" className="d-none">
+                    Terima Kasih
+                </span>
+
+                <img className="ml-5" src={`${process.env.PUBLIC_URL}/images/loading2.gif`} style={{width:"75px"}} alt="loading 2"/>
+            </div>
         )
     }else if(mask === 1){
         zIndex = 3
