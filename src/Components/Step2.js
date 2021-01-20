@@ -57,7 +57,6 @@ export class Step2 extends Component {
         });
     }
     
-
     componentDidMount(){
         navigator.mediaDevices.getUserMedia({audio: true})
             .then(stream => this.recorder.init(stream))
@@ -612,28 +611,6 @@ export class Step2 extends Component {
         }
     }
 
-    testrecord = ()=>{
-        this.audio.play()
-        this.audio.addEventListener('ended', () => {
-            this.startRecordAudio()
-            setTimeout( () => {
-                this.stopRecordAudio()
-
-                this.setState({ ...this.state, playAudioProcess: false })
-            }, 2500);
-        });
-        
-        // let formData = new FormData()
-        // formData.append("test1", "test1")
-        // formData.append("test2", "test2")
-
-        // axios.post('http://localhost/api/process/upload.php', formData,{ 
-        //     headers: {'Content-Type': 'multipart/form-data'} }
-        // ).then(res => {
-        //     console.log("test post")
-        // })
-    }
-
     render() {
         let {product, spiceLevel, topping} = this.props
         let listDataProduct = product.map((v, key) =>
@@ -651,13 +628,6 @@ export class Step2 extends Component {
                 <IdleTimer ref={ref => { this.idleTimer = ref }} element={document} onActive={this.onActive} onIdle={this.onIdle} onAction={this.onAction} debounce={250} timeout={this.state.timeout} />
                 <BannerVideo videoUrl={this.state.videoUrl}></BannerVideo>
                 <Masking mask={this.state.mask} />
-                <Row>
-                    <Col md="6">
-                        <button className="col-md-12 btn btn-warning" onClick={()=>this.testrecord()}>
-                            test record
-                        </button>
-                    </Col>
-                </Row>
                 <Row className="m-auto">
                     <Col md="4" lg="4" id="sectionPrd" className="p-0" style={{overflowY: 'auto', height: "1000px", transition: "all 400ms ease"}}>
                         <div id="menuStep3" className="m-2 row" style={{backgroundColor: "#eeeeee", color:"#000", border: "0px solid", overflowY:"scroll"}}>
