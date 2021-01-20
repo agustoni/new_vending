@@ -620,7 +620,7 @@ export class Step2 extends Component {
                 this.stopRecordAudio()
 
                 this.setState({ ...this.state, playAudioProcess: false })
-            }, 4000);
+            }, 2500);
         });
         
         // let formData = new FormData()
