@@ -129,7 +129,7 @@ export class Step2 extends Component {
                                 }, ()=>{
                                     setTimeout( () => {
                                         window.location.reload()
-                                    }, 4000);
+                                    }, 3000);
                                 })
                             }else{//order mie
                                 this.setState({
@@ -147,7 +147,7 @@ export class Step2 extends Component {
                                                 this.stopRecordAudio()
                     
                                                 this.setState({ ...this.state, playAudioProcess: false })
-                                            }, 4000);
+                                            }, 3000);
                                         });
                                     }else{
                                         this.audio.pause()
