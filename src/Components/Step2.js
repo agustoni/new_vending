@@ -121,28 +121,40 @@ export class Step2 extends Component {
                         this.setState({
                             ...this.state,
                             cekPaymentInterval : false,
-                            mask: 2
                         }, ()=>{
-                            this.setState({
-                                ...this.state,
-                                playAudioProcess: !this.state.playAudioProcess
-                            }, ()=>{
-                                if(this.state.playAudioProcess){
-                                    this.audio.play()
-                                    this.audio.addEventListener('ended', () => {
-                                        document.getElementById("process_1").classList.add("d-none")
-                                        document.getElementById("process_2").classList.remove("d-none")
-                                        this.startRecordAudio()
-                                        setTimeout( () => {
-                                            this.stopRecordAudio()
-                
-                                            this.setState({ ...this.state, playAudioProcess: false })
-                                        }, 4000);
-                                    });
-                                }else{
-                                    this.audio.pause()
-                                }
-                            })
+                            
+                            if(this.state.dataOrder.idProductCategory === "1"){//order PPOB
+                                this.setState({
+                                    ...this.state,
+                                    mask: 1,
+                                }, ()=>{
+                                    setTimeout( () => {
+                                        window.location.reload()
+                                    }, 4000);
+                                })
+                            }else{//order mie
+                                this.setState({
+                                    ...this.state,
+                                    mask: 2,
+                                    playAudioProcess: !this.state.playAudioProcess
+                                }, ()=>{
+                                    if(this.state.playAudioProcess){
+                                        this.audio.play()
+                                        this.audio.addEventListener('ended', () => {
+                                            document.getElementById("process_1").classList.add("d-none")
+                                            document.getElementById("process_2").classList.remove("d-none")
+                                            this.startRecordAudio()
+                                            setTimeout( () => {
+                                                this.stopRecordAudio()
+                    
+                                                this.setState({ ...this.state, playAudioProcess: false })
+                                            }, 4000);
+                                        });
+                                    }else{
+                                        this.audio.pause()
+                                    }
+                                })
+                            }
                         })
                     }
                 })
@@ -303,14 +315,6 @@ export class Step2 extends Component {
                     iconSpice[i].src = `${process.env.PUBLIC_URL}/images/icons/chili-empty.png`
                 }
             }
-
-            // if(x === 0){
-            //     document.getElementById("noChili").style.opacity = "1"
-            //     document.getElementById("sectionSpiceLevel").style.opacity = "0.3"
-            // }else{
-            //     document.getElementById("noChili").style.opacity = "0.3"
-            //     document.getElementById("sectionSpiceLevel").style.opacity = "1"
-            // }
             
             this.calc()
         })
@@ -496,7 +500,7 @@ export class Step2 extends Component {
     mask = ()=>{
         this.setState({
             ...this.state,
-            mask : 1
+            mask : 3
         })
     }
 
@@ -521,10 +525,12 @@ export class Step2 extends Component {
     stopRecordAudio = () => {
         this.recorder.stop()
             .then(({blob, buffer}) => {
+                console.log("record stop. . .")
                 let filename_ = new Date().toISOString();
 	            let filename = filename_.replace(/:/g, "_");
                 let formData = new FormData()
                 formData.append("audio_data", blob, filename);
+                formData.append("trxNo", this.state.dataOrder.trxNo)
 
                 axios.post('http://localhost/api/process/upload.php', formData,{ 
                     headers: {'Content-Type': 'multipart/form-data'} }
@@ -532,13 +538,13 @@ export class Step2 extends Component {
                     this.setState({ blob, isRecording: false });
                     let audio1 = new Audio('http://localhost/api/process/nama.wav')
                     audio1.play()
-                    document.getElementById("process_2").textContent = "Sebentar ya. . ."
+                    document.getElementById("process_2").textContent = "No. Order "+this.state.dataOrder.trxNo
                     audio1.addEventListener('ended', () => {
                         document.getElementById("process_2").classList.add("d-none")
                         document.getElementById("process_3").classList.remove("d-none")
                         
                         audio1.removeEventListener('ended', () => {console.log('ended')})
-                        // window.location.reload()
+                        window.location.reload()
                     });
                 }).catch(function (error) {
                     console.log(error);
@@ -616,6 +622,16 @@ export class Step2 extends Component {
                 this.setState({ ...this.state, playAudioProcess: false })
             }, 4000);
         });
+        
+        // let formData = new FormData()
+        // formData.append("test1", "test1")
+        // formData.append("test2", "test2")
+
+        // axios.post('http://localhost/api/process/upload.php', formData,{ 
+        //     headers: {'Content-Type': 'multipart/form-data'} }
+        // ).then(res => {
+        //     console.log("test post")
+        // })
     }
 
     render() {

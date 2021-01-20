@@ -9,7 +9,20 @@ const masking = (props)=>{
     let background = "#fff"
     let content
 
-    if(mask === 2){
+    if(mask === 1){
+        zIndex = 3
+        opacity = 1
+        content = (
+            <div className="loader" style={{marginTop: "30%", fontSize: "50px", fontWeight: "600"}}>
+                <span id="process_3">
+                    Terima Kasih
+                </span>
+
+                <img className="ml-5" src={`${process.env.PUBLIC_URL}/images/loading2.gif`} style={{width:"75px"}} alt="loading 2"/>
+            </div>
+        )
+        
+    }else if(mask === 2){
         zIndex = 3
         opacity = 1
         content = (
@@ -27,7 +40,7 @@ const masking = (props)=>{
                 <img className="ml-5" src={`${process.env.PUBLIC_URL}/images/loading2.gif`} style={{width:"75px"}} alt="loading 2"/>
             </div>
         )
-    }else if(mask === 1){
+    }else if(mask === 3){
         zIndex = 3
         opacity = 0.7
         background = "#b6b6b6"
